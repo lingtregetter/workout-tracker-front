@@ -3,10 +3,8 @@
   padding: 0 20px;
   margin: 0 auto;
 
-  .title {
-    color: #fff;
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 70px;
+  .center-grid {
+    display: grid;
+    justify-items: center;
   }
 }
