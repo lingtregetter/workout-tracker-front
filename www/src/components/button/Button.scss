@@ -1,0 +1,43 @@
+.btn {
+  border-radius: 10px;
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 35px;
+  text-align: center;
+  transition-duration: 0.25s;
+
+  &.btn-primary {
+    background: #185a9d;
+    border: 1px solid #185a9d;
+    color: #fff;
+
+    &:hover {
+      background-color: white;
+      color: #185a9d;
+    }
+  }
+
+  &.btn-secondary {
+    background: #fff;
+    border: 1px solid #fff;
+    color: #185a9d;
+
+    &:hover {
+      background-color: #185a9d;
+      color: white;
+    }
+  }
+
+  &.btn-outlined {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+
+    &:hover {
+      background-color: white;
+      border: 1px solid #185a9d;
+      color: #185a9d;
+    }
+  }
+}
