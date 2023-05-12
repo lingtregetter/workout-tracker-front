@@ -1,14 +1,10 @@
 import { FC } from "react";
+import WelcomeTitle from "../components/welcome-title/WelcomeTitle";
 
 const WelcomePage: FC = () => {
   return (
     <>
-      <h1 className="welcome--title">
-        Welcome, <br />
-        Track your trainings
-        <br />
-        today!
-      </h1>
+      <WelcomeTitle></WelcomeTitle>
     </>
   );
 };
