@@ -1,8 +1,8 @@
 .box {
+  align-items: center;
   background: #f1f1f1;
   box-sizing: border-box;
   display: flex;
-  line-height: 30px;
   margin-bottom: 10px;
   padding: 17px 20px;
   width: 100%;
@@ -16,9 +16,14 @@
   margin-top: 0;
 }
 
-.lamp-kast {
-  background: magenta;
-  height: 25px;
+.icons {
   margin-left: auto;
-  width: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-left: 20px;
+
+  svg:hover {
+    cursor: pointer;
+  }
 }
