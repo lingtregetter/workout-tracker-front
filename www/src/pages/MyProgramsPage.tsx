@@ -41,6 +41,7 @@ const MyProgramsPage: FC = () => {
                     : ""
                 }`}
                 key={item.id}
+                isAddBtnVisible={false}
               ></OverviewRow>
             ))}
           </>
