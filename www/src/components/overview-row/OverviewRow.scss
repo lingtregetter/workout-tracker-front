@@ -1,0 +1,24 @@
+.box {
+  background: #f1f1f1;
+  box-sizing: border-box;
+  display: flex;
+  line-height: 30px;
+  margin-bottom: 10px;
+  padding: 17px 20px;
+  width: 100%;
+}
+
+.box-title {
+  color: #185a97;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.lamp-kast {
+  background: magenta;
+  height: 25px;
+  margin-left: auto;
+  width: 25px;
+}
