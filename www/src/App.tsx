@@ -28,11 +28,11 @@ function App() {
             element={<CreateProgramPage />}
           ></Route>
           <Route
-            path={"/programs/details"}
+            path={"/programs/details/:programId"}
             element={<ProgramViewPage />}
           ></Route>
           <Route
-            path={"/training-block/details"}
+            path={"/training-block/details/:blockId"}
             element={<TrainingBlockViewPage />}
           ></Route>
           <Route

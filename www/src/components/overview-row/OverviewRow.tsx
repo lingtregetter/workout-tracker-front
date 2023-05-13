@@ -25,6 +25,9 @@ const OverviewRow: FC<OverviewRowProperties> = (props) => {
           height="24"
           viewBox="0 96 960 960"
           width="24"
+          onClick={() => {
+            props.onArrowClick();
+          }}
         >
           <path d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z" />
         </svg>

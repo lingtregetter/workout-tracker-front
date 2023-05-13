@@ -5,9 +5,11 @@ import Title from "../components/title/Title";
 import { UserProgram } from "../interfaces/user-program";
 import OverviewRow from "../components/overview-row/OverviewRow";
 import httpClient from "../services/http-client";
+import { useNavigate } from "react-router-dom";
 
 const MyProgramsPage: FC = () => {
   const [programsList, setProgramsList] = useState<UserProgram[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadPrograms();
@@ -21,6 +23,10 @@ const MyProgramsPage: FC = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const onArrowClick = (programId: string) => {
+    navigate(`/programs/details/${programId}`);
   };
 
   return (
@@ -42,6 +48,7 @@ const MyProgramsPage: FC = () => {
                 }`}
                 key={item.id}
                 isAddBtnVisible={false}
+                onArrowClick={() => onArrowClick(item.trainingProgramId)}
               ></OverviewRow>
             ))}
           </>

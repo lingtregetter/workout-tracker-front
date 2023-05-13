@@ -4,10 +4,12 @@ import httpClient from "../services/http-client";
 import { TrainingProgram } from "../interfaces/training-program";
 import Loading from "../components/loading/Loading";
 import OverviewRow from "../components/overview-row/OverviewRow";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProgramViewPage: FC = () => {
   const [trainingProgram, setTrainingProgram] = useState<TrainingProgram>();
-  const programId = "466d5126-c5c4-4072-a232-cf223eeea1ee";
+  const { programId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadProgramBlocks();
@@ -25,13 +27,21 @@ const ProgramViewPage: FC = () => {
     }
   };
 
+  const onArrowClick = (blockId: string) => {
+    navigate(`/training-block/details/${blockId}`);
+  };
+
   return (
     <>
       <MainView title={trainingProgram?.programName ?? ""}>
         {trainingProgram ? (
           <>
             {trainingProgram.trainingBlocks.map((item) => (
-              <OverviewRow title={item.blockName} key={item.id}></OverviewRow>
+              <OverviewRow
+                title={item.blockName}
+                key={item.id}
+                onArrowClick={() => onArrowClick(item.id)}
+              ></OverviewRow>
             ))}
           </>
         ) : (

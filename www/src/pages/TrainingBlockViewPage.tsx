@@ -4,10 +4,12 @@ import httpClient from "../services/http-client";
 import { TrainingBlock } from "../interfaces/training-block";
 import Loading from "../components/loading/Loading";
 import OverviewRow from "../components/overview-row/OverviewRow";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TrainingBlockViewPage: FC = () => {
   const [trainingBlock, setTrainingBlock] = useState<TrainingBlock>();
-  const blockId = "15c2ce24-f228-4e3b-99b8-fa59a9f50691";
+  const { blockId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadBlockWorkouts();
@@ -23,6 +25,10 @@ const TrainingBlockViewPage: FC = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const onArrowClick = () => {
+    navigate("/workout/details");
   };
 
   const gridStyles: CSSProperties = {
@@ -42,6 +48,7 @@ const TrainingBlockViewPage: FC = () => {
                 title={item.workoutName}
                 key={item.id}
                 isAddBtnVisible={false}
+                onArrowClick={onArrowClick}
               ></OverviewRow>
             ))}
           </div>
