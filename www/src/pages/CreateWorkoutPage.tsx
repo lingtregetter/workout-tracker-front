@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useEffect, useState } from "react";
+import { CSSProperties, ChangeEvent, FC, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import Button from "../components/button/Button";
 import httpClient from "../services/http-client";
@@ -35,18 +35,18 @@ const CreateWorkoutPage: FC = () => {
     }
   };
 
-  // TODO: improve the state handling
-  const checkboxIdHandler = (id: UUID) => {
-    setNewWorkoutExerciseIds((existingIds) => {
-      const index = existingIds.indexOf(id);
-      if (index > -1) {
-        existingIds.splice(index, 1);
-      } else {
-        existingIds.push(id);
-      }
-
-      return existingIds;
-    });
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setNewWorkoutExerciseIds((prevCheckboxes) => [
+        ...prevCheckboxes,
+        value as UUID,
+      ]);
+    } else {
+      setNewWorkoutExerciseIds((prevCheckboxes) =>
+        prevCheckboxes.filter((item) => item !== value)
+      );
+    }
   };
 
   const onSubmit = async (event: any) => {
@@ -113,9 +113,7 @@ const CreateWorkoutPage: FC = () => {
                           type="checkbox"
                           name={exercise.exerciseName}
                           value={exercise.id}
-                          onChange={(event) => {
-                            checkboxIdHandler(event.target.value as UUID);
-                          }}
+                          onChange={handleCheckboxChange}
                         />
                         <label htmlFor={exercise.exerciseName}>
                           {exercise.exerciseName}
