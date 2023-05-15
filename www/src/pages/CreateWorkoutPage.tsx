@@ -4,12 +4,11 @@ import Button from "../components/button/Button";
 import httpClient from "../services/http-client";
 import { MuscleExercise } from "../interfaces/muscle-exercise";
 import Loading from "../components/loading/Loading";
-import { UUID } from "crypto";
 import { useNavigate } from "react-router-dom";
 
 const CreateWorkoutPage: FC = () => {
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();
-  const [newWorkoutExerciseIds, setNewWorkoutExerciseIds] = useState<UUID[]>(
+  const [newWorkoutExerciseIds, setNewWorkoutExerciseIds] = useState<string[]>(
     []
   );
   const [workoutName, setWorkoutName] = useState<string>();
@@ -27,8 +26,6 @@ const CreateWorkoutPage: FC = () => {
         `/v1/ExerciseMuscles`
       );
 
-      console.log(response.data);
-
       setMuscleExercises(response.data);
     } catch (e) {
       console.log(e);
@@ -37,20 +34,20 @@ const CreateWorkoutPage: FC = () => {
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
+
     if (checked) {
-      setNewWorkoutExerciseIds((prevCheckboxes) => [
-        ...prevCheckboxes,
-        value as UUID,
-      ]);
+      setNewWorkoutExerciseIds((prevCheckboxes) => [...prevCheckboxes, value]);
     } else {
       setNewWorkoutExerciseIds((prevCheckboxes) =>
-        prevCheckboxes.filter((item) => item !== value)
+        prevCheckboxes.filter(
+          (item, index) =>
+            item !== value || index !== newWorkoutExerciseIds.indexOf(value)
+        )
       );
     }
   };
 
   const onSubmit = async (event: any) => {
-    console.log(event);
     event.preventDefault();
 
     try {
@@ -58,7 +55,7 @@ const CreateWorkoutPage: FC = () => {
         workoutName: workoutName,
         avPerformanceTime: avPerformanceTime,
         trainingBlockId: blockId,
-        exerciseIds: newWorkoutExerciseIds,
+        exerciseIds: [...new Set(newWorkoutExerciseIds)],
       });
 
       navigate(`/training-block/details/${blockId}`);
@@ -85,7 +82,6 @@ const CreateWorkoutPage: FC = () => {
             name="workoutName"
             onChange={(event) => {
               setWorkoutName(event.target.value);
-              console.log(event.target.value);
             }}
           />
           <label htmlFor="avPerformanceTime" className="main-label">
@@ -96,7 +92,6 @@ const CreateWorkoutPage: FC = () => {
             name="avPerformanceTime"
             onChange={(event) => {
               setAvPerformanceTime(+event.target.value);
-              console.log(event.target.value);
             }}
           />
           <label className="main-label">Select exercises</label>
