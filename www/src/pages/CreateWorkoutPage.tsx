@@ -1,10 +1,18 @@
-import { CSSProperties, ChangeEvent, FC, useEffect, useState } from "react";
+import {
+  CSSProperties,
+  ChangeEvent,
+  FC,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import MainView from "../components/main-view/MainView";
 import Button from "../components/button/Button";
 import httpClient from "../services/http-client";
 import { MuscleExercise } from "../interfaces/muscle-exercise";
 import Loading from "../components/loading/Loading";
 import { useNavigate } from "react-router-dom";
+import CreateWorkoutContext from "../stores/create-workout-context";
 
 const CreateWorkoutPage: FC = () => {
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();
@@ -13,10 +21,14 @@ const CreateWorkoutPage: FC = () => {
   );
   const [workoutName, setWorkoutName] = useState<string>();
   const [avPerformanceTime, setAvPerformanceTime] = useState<number>();
-  const blockId = "15c2ce24-f228-4e3b-99b8-fa59a9f50691";
   const navigate = useNavigate();
+  const context = useContext(CreateWorkoutContext);
 
   useEffect(() => {
+    if (!context.trainingBlockId) {
+      navigate("/programs");
+    }
+
     loadMuscleExercises();
   }, []);
 
@@ -54,11 +66,11 @@ const CreateWorkoutPage: FC = () => {
       await httpClient.post("/v1/workouts", {
         workoutName: workoutName,
         avPerformanceTime: avPerformanceTime,
-        trainingBlockId: blockId,
+        trainingBlockId: context.trainingBlockId,
         exerciseIds: [...new Set(newWorkoutExerciseIds)],
       });
 
-      navigate(`/training-block/details/${blockId}`);
+      navigate(`/training-block/details/${context.trainingBlockId}`);
     } catch (e) {
       console.log(e);
     }

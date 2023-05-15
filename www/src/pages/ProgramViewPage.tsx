@@ -1,15 +1,17 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import httpClient from "../services/http-client";
 import { TrainingProgram } from "../interfaces/training-program";
 import Loading from "../components/loading/Loading";
 import OverviewRow from "../components/overview-row/OverviewRow";
 import { useNavigate, useParams } from "react-router-dom";
+import CreateWorkoutContext from "../stores/create-workout-context";
 
 const ProgramViewPage: FC = () => {
   const [trainingProgram, setTrainingProgram] = useState<TrainingProgram>();
   const { programId } = useParams();
   const navigate = useNavigate();
+  const context = useContext(CreateWorkoutContext);
 
   useEffect(() => {
     loadProgramBlocks();
@@ -31,7 +33,8 @@ const ProgramViewPage: FC = () => {
     navigate(`/training-block/details/${blockId}`);
   };
 
-  const onAddClick = () => {
+  const onAddClick = (blockId: string) => {
+    context.trainingBlockId = blockId;
     navigate(`/workout/create`);
   };
 
@@ -45,7 +48,7 @@ const ProgramViewPage: FC = () => {
                 title={item.blockName}
                 key={item.id}
                 onArrowClick={() => onArrowClick(item.id)}
-                onAddClick={onAddClick}
+                onAddClick={() => onAddClick(item.id)}
               ></OverviewRow>
             ))}
           </>
