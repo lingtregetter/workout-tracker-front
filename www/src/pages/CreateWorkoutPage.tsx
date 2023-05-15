@@ -2,6 +2,7 @@ import {
   CSSProperties,
   ChangeEvent,
   FC,
+  FormEvent,
   useContext,
   useEffect,
   useState,
@@ -13,6 +14,7 @@ import { MuscleExercise } from "../interfaces/muscle-exercise";
 import Loading from "../components/loading/Loading";
 import { useNavigate } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
+import ExerciseModal from "../components/exerciseModal/ExerciseModal";
 
 const CreateWorkoutPage: FC = () => {
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();
@@ -23,9 +25,10 @@ const CreateWorkoutPage: FC = () => {
   const [avPerformanceTime, setAvPerformanceTime] = useState<number>();
   const navigate = useNavigate();
   const context = useContext(CreateWorkoutContext);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    if (!context.trainingBlockId) {
+    if (!context.trainingBlockId || !context.blockName) {
       navigate("/programs");
     }
 
@@ -59,11 +62,11 @@ const CreateWorkoutPage: FC = () => {
     }
   };
 
-  const onSubmit = async (event: any) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      await httpClient.post("/v1/workouts", {
+      await httpClient.post("/v1/Workouts", {
         workoutName: workoutName,
         avPerformanceTime: avPerformanceTime,
         trainingBlockId: context.trainingBlockId,
@@ -84,7 +87,7 @@ const CreateWorkoutPage: FC = () => {
 
   return (
     <>
-      <MainView title={"Add exercises to + dynamic ending"}>
+      <MainView title={`Add exercises to ${context.blockName}`}>
         <form style={formStyle} onSubmit={onSubmit}>
           <label htmlFor="workoutName" className="main-label">
             Workout name
@@ -134,8 +137,13 @@ const CreateWorkoutPage: FC = () => {
           ) : (
             <Loading />
           )}
-          <div>Create new exercise</div>
-
+          <Button
+            onClick={() => {
+              setIsModalVisible((isVisible) => !isVisible);
+            }}
+            text={"Create new exercise"}
+            type={"outlined"}
+          ></Button>
           <Button
             text={"Create"}
             onClick={() => {
@@ -145,6 +153,12 @@ const CreateWorkoutPage: FC = () => {
             btnType="submit"
           ></Button>
         </form>
+        {isModalVisible && (
+          <ExerciseModal
+            onCancel={() => setIsModalVisible((isVisible) => !isVisible)}
+            onSuccess={loadMuscleExercises}
+          ></ExerciseModal>
+        )}
       </MainView>
     </>
   );

@@ -33,8 +33,9 @@ const ProgramViewPage: FC = () => {
     navigate(`/training-block/details/${blockId}`);
   };
 
-  const onAddClick = (blockId: string) => {
+  const onAddClick = (blockId: string, blockName: string) => {
     context.trainingBlockId = blockId;
+    context.blockName = blockName;
     navigate(`/workout/create`);
   };
 
@@ -48,7 +49,7 @@ const ProgramViewPage: FC = () => {
                 title={item.blockName}
                 key={item.id}
                 onArrowClick={() => onArrowClick(item.id)}
-                onAddClick={() => onAddClick(item.id)}
+                onAddClick={() => onAddClick(item.id, item.blockName)}
               ></OverviewRow>
             ))}
           </>
