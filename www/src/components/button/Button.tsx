@@ -2,8 +2,14 @@ import { ButtonProperties } from "../../interfaces/button-properties";
 import "./Button.scss";
 
 const Button: React.FC<ButtonProperties> = (props) => {
+  const btnType = props.btnType ?? "button";
+
   return (
-    <button className={`btn btn-${props.type}`} onClick={() => props.onClick()}>
+    <button
+      className={`btn btn-${props.type}`}
+      onClick={() => props.onClick()}
+      type={btnType}
+    >
       {props.text}
     </button>
   );

@@ -31,6 +31,10 @@ const ProgramViewPage: FC = () => {
     navigate(`/training-block/details/${blockId}`);
   };
 
+  const onAddClick = () => {
+    navigate(`/workout/create`);
+  };
+
   return (
     <>
       <MainView title={trainingProgram?.programName ?? ""}>
@@ -41,6 +45,7 @@ const ProgramViewPage: FC = () => {
                 title={item.blockName}
                 key={item.id}
                 onArrowClick={() => onArrowClick(item.id)}
+                onAddClick={onAddClick}
               ></OverviewRow>
             ))}
           </>

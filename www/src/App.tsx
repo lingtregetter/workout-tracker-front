@@ -36,7 +36,7 @@ function App() {
             element={<TrainingBlockViewPage />}
           ></Route>
           <Route
-            path={"/workout/details"}
+            path={"/workout/details/:workoutId"}
             element={<WorkoutViewPage />}
           ></Route>
           <Route

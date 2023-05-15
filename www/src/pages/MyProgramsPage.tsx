@@ -49,6 +49,7 @@ const MyProgramsPage: FC = () => {
                 key={item.id}
                 isAddBtnVisible={false}
                 onArrowClick={() => onArrowClick(item.trainingProgramId)}
+                onAddClick={() => {}}
               ></OverviewRow>
             ))}
           </>

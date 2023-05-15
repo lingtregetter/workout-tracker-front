@@ -27,8 +27,8 @@ const TrainingBlockViewPage: FC = () => {
     }
   };
 
-  const onArrowClick = () => {
-    navigate("/workout/details");
+  const onArrowClick = (workoutId: string) => {
+    navigate(`/workout/details/${workoutId}`);
   };
 
   const gridStyles: CSSProperties = {
@@ -48,7 +48,8 @@ const TrainingBlockViewPage: FC = () => {
                 title={item.workoutName}
                 key={item.id}
                 isAddBtnVisible={false}
-                onArrowClick={onArrowClick}
+                onArrowClick={() => onArrowClick(item.id)}
+                onAddClick={() => {}}
               ></OverviewRow>
             ))}
           </div>
