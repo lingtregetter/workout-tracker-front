@@ -12,6 +12,12 @@ import { useNavigate } from "react-router-dom";
 
 interface AuthContext {
   userId?: string;
+  register: (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   logIn: (email: string, password: string) => Promise<void>;
   logOut: () => void;
 }
@@ -30,6 +36,26 @@ const AuthProvider: FC<AuthProviderProps> = (props) => {
     const accessToken = localStorage.getItem("access-token");
     setUserIdOnLoad(accessToken);
   }, []);
+
+  const register = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) => {
+    const response = await httpClient(false).post<{
+      jwt: string;
+      refreshToken: string;
+    }>("v1/identity/Account/Register", {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    });
+
+    localStorage.setItem("access-token", response.data.jwt);
+    setUserIdOnLoad(response.data.jwt);
+  };
 
   const logIn = async (email: string, password: string) => {
     const response = await httpClient(false).post<{
@@ -63,6 +89,7 @@ const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const authContextValue: AuthContext = {
     userId,
+    register,
     logIn,
     logOut,
   };
@@ -79,6 +106,7 @@ const useAuth = (): AuthContext => {
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
+
   return context;
 };
 
