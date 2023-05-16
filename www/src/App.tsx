@@ -11,39 +11,77 @@ import ProgramViewPage from "./pages/ProgramViewPage";
 import TrainingBlockViewPage from "./pages/TrainingBlockViewPage";
 import WorkoutViewPage from "./pages/WorkoutViewPage";
 import CreateWorkoutPage from "./pages/CreateWorkoutPage";
+import { AuthProvider } from "./stores/auth-context";
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
 
 function App() {
   return (
     <>
       <BrowserRouter basename={"/"}>
-        <Header></Header>
-        <Routes>
-          <Route path={"/"} element={<WelcomePage />}></Route>
-          <Route path={"/sign-in"} element={<SignInPage />}></Route>
-          <Route path={"/sign-up"} element={<SignUpPage />}></Route>
-          <Route path={"/user/details"} element={<UserDetailsPage />}></Route>
-          <Route path={"/programs"} element={<MyProgramsPage />}></Route>
-          <Route
-            path={"/programs/create"}
-            element={<CreateProgramPage />}
-          ></Route>
-          <Route
-            path={"/programs/details/:programId"}
-            element={<ProgramViewPage />}
-          ></Route>
-          <Route
-            path={"/training-block/details/:blockId"}
-            element={<TrainingBlockViewPage />}
-          ></Route>
-          <Route
-            path={"/workout/details/:workoutId"}
-            element={<WorkoutViewPage />}
-          ></Route>
-          <Route
-            path={"/workout/create"}
-            element={<CreateWorkoutPage />}
-          ></Route>
-        </Routes>
+        <AuthProvider>
+          <Header></Header>
+          <Routes>
+            <Route path={"/"} element={<WelcomePage />}></Route>
+            <Route path={"/sign-in"} element={<SignInPage />}></Route>
+            <Route path={"/sign-up"} element={<SignUpPage />}></Route>
+            <Route
+              path={"/user/details"}
+              element={
+                <ProtectedRoute>
+                  <UserDetailsPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/programs"}
+              element={
+                <ProtectedRoute>
+                  <MyProgramsPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/programs/create"}
+              element={
+                <ProtectedRoute>
+                  <CreateProgramPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/programs/details/:programId"}
+              element={
+                <ProtectedRoute>
+                  <ProgramViewPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/training-block/details/:blockId"}
+              element={
+                <ProtectedRoute>
+                  <TrainingBlockViewPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/workout/details/:workoutId"}
+              element={
+                <ProtectedRoute>
+                  <WorkoutViewPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/workout/create"}
+              element={
+                <ProtectedRoute>
+                  <CreateWorkoutPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </>
   );
