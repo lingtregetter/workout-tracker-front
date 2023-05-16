@@ -33,7 +33,7 @@ const LoginForm: FC<LoginFormProperties> = (props) => {
         }}
       />
       <Button
-        text={"Login"}
+        text={"Sign in"}
         onClick={() => {}}
         type={"outlined"}
         btnType="submit"

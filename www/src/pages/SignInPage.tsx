@@ -21,7 +21,7 @@ const SignInPage: FC = () => {
 
   return (
     <>
-      <MainView title={"Login"}>
+      <MainView title={"Sign in"}>
         <LoginForm
           onSubmit={async (event, email, password) => {
             onSubmit(event, email, password);
