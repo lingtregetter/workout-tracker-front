@@ -31,6 +31,10 @@ const MyProgramsPage: FC = () => {
     navigate(`/programs/details/${programId}`);
   };
 
+  const onCreateNewProgramClick = () => {
+    navigate(`/programs/create`);
+  };
+
   return (
     <>
       <MainView title={"My programs"}>
@@ -58,6 +62,7 @@ const MyProgramsPage: FC = () => {
         )}
         <Button
           onClick={() => {
+            onCreateNewProgramClick();
             console.log("create new program");
           }}
           text={"Create new program"}
