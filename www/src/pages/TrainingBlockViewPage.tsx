@@ -17,7 +17,7 @@ const TrainingBlockViewPage: FC = () => {
 
   const loadBlockWorkouts = async () => {
     try {
-      const response = await httpClient.get<TrainingBlock>(
+      const response = await httpClient().get<TrainingBlock>(
         `/v1/TrainingBlocks/${blockId}`
       );
 

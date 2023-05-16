@@ -32,7 +32,7 @@ const AuthProvider: FC<AuthProviderProps> = (props) => {
   }, []);
 
   const logIn = async (email: string, password: string) => {
-    const response = await httpClient.post<{
+    const response = await httpClient(false).post<{
       jwt: string;
       refreshToken: string;
     }>("/v1/identity/Account/LogIn", {

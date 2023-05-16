@@ -13,7 +13,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
     event.preventDefault();
 
     try {
-      await httpClient.post("/v1/WorkoutSets", {
+      await httpClient().post("/v1/WorkoutSets", {
         workoutExerciseId: "2d16a805-4000-4b4d-9fe9-df919568b4c6",
         usedWeight: weight,
         repNumber: repCount,

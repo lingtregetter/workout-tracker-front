@@ -1,11 +1,15 @@
 import axios from "axios";
 
-const httpClient = axios.create({
-  baseURL: "http://localhost:5069/api",
-  headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImIwMzhjYjhiLWE2ZTQtNDU5MS1iMmExLWM5NmI4ZmY1ZjI4NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbkBhcHAuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW5AYXBwLmNvbSIsIkFzcE5ldC5JZGVudGl0eS5TZWN1cml0eVN0YW1wIjoiUU1FUTNBU1ZaQTdYQVpGRjZWTzJBS0hFUUkzSTRESUQiLCJleHAiOjE2ODQ4MzE3NzUsImlzcyI6InRhbHRlY2guZWUiLCJhdWQiOiJ0YWx0ZWNoLmVlIn0.3JD0ZjUl6MVbqkIOQcb-4hzIor7U78k_YYb8XBzYnKc",
-  },
-});
+const httpClient = (isAuthenticated = true) => {
+  const headers: any = {};
+  if (isAuthenticated) {
+    headers["Authorization"] = `Bearer ${localStorage.getItem("access-token")}`;
+  }
+
+  return axios.create({
+    baseURL: "http://localhost:5069/api",
+    headers,
+  });
+};
 
 export default httpClient;

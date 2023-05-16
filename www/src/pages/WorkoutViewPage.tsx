@@ -17,7 +17,7 @@ const WorkoutViewPage: FC = () => {
 
   const loadWorkoutExercises = async () => {
     try {
-      const response = await httpClient.get<Workout>(
+      const response = await httpClient().get<Workout>(
         `/v1/WorkoutExercises/${workoutId}`
       );
 

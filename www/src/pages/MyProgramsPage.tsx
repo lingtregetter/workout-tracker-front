@@ -17,7 +17,9 @@ const MyProgramsPage: FC = () => {
 
   const loadPrograms = async () => {
     try {
-      const response = await httpClient.get<UserProgram[]>("/v1/UserPrograms");
+      const response = await httpClient().get<UserProgram[]>(
+        "/v1/UserPrograms"
+      );
 
       setProgramsList(response.data);
     } catch (e) {

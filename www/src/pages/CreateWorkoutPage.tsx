@@ -37,7 +37,7 @@ const CreateWorkoutPage: FC = () => {
 
   const loadMuscleExercises = async () => {
     try {
-      const response = await httpClient.get<MuscleExercise[]>(
+      const response = await httpClient().get<MuscleExercise[]>(
         `/v1/ExerciseMuscles`
       );
 
@@ -66,7 +66,7 @@ const CreateWorkoutPage: FC = () => {
     event.preventDefault();
 
     try {
-      await httpClient.post("/v1/Workouts", {
+      await httpClient().post("/v1/Workouts", {
         workoutName: workoutName,
         avPerformanceTime: avPerformanceTime,
         trainingBlockId: context.trainingBlockId,

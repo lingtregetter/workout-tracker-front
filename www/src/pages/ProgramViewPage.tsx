@@ -19,7 +19,7 @@ const ProgramViewPage: FC = () => {
 
   const loadProgramBlocks = async () => {
     try {
-      const response = await httpClient.get<TrainingProgram>(
+      const response = await httpClient().get<TrainingProgram>(
         `/v1/TrainingPrograms/${programId}`
       );
 

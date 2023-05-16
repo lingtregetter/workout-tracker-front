@@ -19,7 +19,9 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
 
   const loadMuscleGroups = async () => {
     try {
-      const response = await httpClient.get<MuscleGroup[]>(`/v1/MuscleGroups`);
+      const response = await httpClient().get<MuscleGroup[]>(
+        `/v1/MuscleGroups`
+      );
 
       setMuscles(response.data);
     } catch (e) {
@@ -31,7 +33,7 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
     event.preventDefault();
 
     try {
-      await httpClient.post("/v1/Exercises", {
+      await httpClient().post("/v1/Exercises", {
         exerciseName: exerciseName,
         exerciseDescription: exerciseDescription,
         muscleGroupIds: muscleGroupIds,
