@@ -14,7 +14,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
 
     try {
       await httpClient().post("/v1/WorkoutSets", {
-        workoutExerciseId: "2d16a805-4000-4b4d-9fe9-df919568b4c6",
+        workoutExerciseId: props.exerciseId,
         usedWeight: weight,
         repNumber: repCount,
       });
@@ -28,7 +28,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
 
   return (
     <Modal onCancel={props.onCancel}>
-      <h1 className="set-modal-title">TODO: Exercise name,</h1>
+      <h1 className="set-modal-title">{props.exerciseName},</h1>
       <h1 className="set-modal-title">Add a new repetition</h1>
       <form onSubmit={onSubmit}>
         <label htmlFor="repetitionCount" className="set-modal-label">

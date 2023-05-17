@@ -6,7 +6,13 @@ export interface Workout {
   readonly exercises: {
     readonly id: UUID;
     readonly exerciseName: string;
+    readonly workoutExerciseId: string;
     readonly exerciseDescription?: string;
     readonly notes?: string;
+    sets?: {
+      readonly id: UUID;
+      readonly repNumber: number;
+      readonly usedWeight: number;
+    }[];
   }[];
 }
