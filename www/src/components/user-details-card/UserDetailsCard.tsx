@@ -73,39 +73,54 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
         }
       >
         <label htmlFor="gender">Gender</label>
-        <div className="flex">
-          <input
-            type="radio"
-            value="Female"
-            checked={"Female" === gender}
-            name="gender"
-            onChange={() => setGender("Female")}
-            disabled={isReadOnly}
-          />
-          <label htmlFor="">Female</label>
-        </div>
-        <div className="flex">
-          <input
-            type="radio"
-            value="Male"
-            checked={"Male" === gender}
-            name="gender"
-            onChange={() => setGender("Male")}
-            disabled={isReadOnly}
-          />
-          <label htmlFor="">Male</label>
-        </div>
-        <div className="flex">
-          <input
-            type="radio"
-            value="Unknown"
-            checked={"Unknown" === gender}
-            name="gender"
-            onChange={() => setGender("Unknown")}
-            disabled={isReadOnly}
-          />
-          <label htmlFor="">Unknown</label>
-        </div>
+        {isReadOnly && personalInformation ? (
+          <div className="flex">
+            <input
+              type="radio"
+              value={gender}
+              checked={true}
+              name="gender"
+              disabled={isReadOnly}
+            />
+            <label htmlFor="gender">{gender}</label>
+          </div>
+        ) : (
+          <>
+            <div className="flex">
+              <input
+                type="radio"
+                value="Female"
+                checked={"Female" === gender}
+                name="gender"
+                onChange={() => setGender("Female")}
+                disabled={isReadOnly}
+              />
+              <label htmlFor="gender">Female</label>
+            </div>
+            <div className="flex">
+              <input
+                type="radio"
+                value="Male"
+                checked={"Male" === gender}
+                name="gender"
+                onChange={() => setGender("Male")}
+                disabled={isReadOnly}
+              />
+              <label htmlFor="">Male</label>
+            </div>
+            <div className="flex">
+              <input
+                type="radio"
+                value="Unknown"
+                checked={"Unknown" === gender}
+                name="gender"
+                onChange={() => setGender("Unknown")}
+                disabled={isReadOnly}
+              />
+              <label htmlFor="">Unknown</label>
+            </div>
+          </>
+        )}
         <label htmlFor="height">Height</label>
         <input
           type="number"
