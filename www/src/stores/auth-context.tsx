@@ -82,6 +82,7 @@ const AuthProvider: FC<AuthProviderProps> = (props) => {
     Object.entries(decodedJwt).forEach(([key, value]) => {
       if (key.includes("nameidentifier")) {
         setUserId(value);
+        // TODO: Bug - unable to get user details via URL
         navigate("/programs");
       }
     });

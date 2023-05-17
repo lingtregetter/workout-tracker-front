@@ -17,6 +17,13 @@ const Header: FC = () => {
     <header className="header">
       {auth.userId ? (
         <>
+          <Link to={"/user/details"}>
+            <Button
+              onClick={() => {}}
+              text={"User Details"}
+              type={"secondary"}
+            ></Button>
+          </Link>
           <Button onClick={logOut} text={"Sign out"} type={"primary"}></Button>
         </>
       ) : (
