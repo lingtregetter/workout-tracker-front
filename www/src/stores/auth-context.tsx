@@ -8,7 +8,7 @@ import {
 } from "react";
 import httpClient from "../services/http-client";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface AuthContext {
   userId?: string;
@@ -31,6 +31,7 @@ const AuthContext = createContext<AuthContext | undefined>(undefined);
 const AuthProvider: FC<AuthProviderProps> = (props) => {
   const [userId, setUserId] = useState<string | undefined>();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access-token");
@@ -77,13 +78,18 @@ const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const setUserIdOnLoad = (token?: string | null) => {
     if (!token) return;
+    const pathname = location.pathname;
     const decodedJwt = jwt_decode(token) as Object;
+
     // TODO: expires check
     Object.entries(decodedJwt).forEach(([key, value]) => {
       if (key.includes("nameidentifier")) {
         setUserId(value);
-        // TODO: Bug - unable to get user details via URL
-        navigate("/programs");
+        if (["/sign-in", "/sign-up", "/"].includes(pathname)) {
+          navigate("/programs");
+          return;
+        }
+        navigate(pathname);
       }
     });
   };
