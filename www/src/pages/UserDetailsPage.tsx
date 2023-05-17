@@ -14,21 +14,19 @@ const UserDetailsPage: FC = () => {
 
   const loadUserPersonalInformation = async () => {
     try {
-      const response = await httpClient().get<PersonalInformation[]>(
+      const response = await httpClient().get<PersonalInformation>(
         "/v1/PersonalInformations"
       );
-      setPersonalInformation(response.data[0]);
+      setPersonalInformation(response.data);
     } catch (e) {}
   };
   return (
     <>
       <MainView title={"User details"}>
-        {personalInformation && (
-          <UserDetailsCard
-            personalInformation={personalInformation}
-            onSuccess={loadUserPersonalInformation}
-          ></UserDetailsCard>
-        )}
+        <UserDetailsCard
+          personalInformation={personalInformation!}
+          onSuccess={loadUserPersonalInformation}
+        ></UserDetailsCard>
       </MainView>
     </>
   );

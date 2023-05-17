@@ -1,24 +1,33 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import "./UserDetailsCard.scss";
 import Button from "../button/Button";
 import { UserDetailsCardProperties } from "../../interfaces/user-details-card-properties";
 import httpClient from "../../services/http-client";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../stores/auth-context";
 
 const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
   const personalInformation = props.personalInformation;
+
   const navigate = useNavigate();
-  const [gender, setGender] = useState<"Female" | "Male" | "Unknown">(
-    personalInformation.gender
-  );
-  const [height, setHeight] = useState<number>(personalInformation.height);
-  const [weight, setWeight] = useState<number>(personalInformation.weight);
+  const [gender, setGender] = useState<
+    "Female" | "Male" | "Unknown" | undefined
+  >(personalInformation?.gender);
+  const [height, setHeight] = useState<number | undefined>();
+  const [weight, setWeight] = useState<number | undefined>();
   const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+  const auth = useAuth();
+
+  useEffect(() => {
+    setHeight(personalInformation?.height);
+    setWeight(personalInformation?.weight);
+    setGender(personalInformation?.gender);
+  }, [personalInformation]);
 
   const updateDetailsOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const updatedDetails = {
-      id: personalInformation.id,
+      id: personalInformation!.id,
       gender: gender,
       height: height,
       weight: weight,
@@ -26,7 +35,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
 
     try {
       await httpClient().put(
-        `/v1/PersonalInformations/${personalInformation.id}`,
+        `/v1/PersonalInformations/${personalInformation!.id}`,
         updatedDetails
       );
       await props.onSuccess();
@@ -36,9 +45,33 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
     }
   };
 
+  const saveDetailsOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const details = {
+      id: auth.userId,
+      gender,
+      height,
+      weight,
+    };
+
+    try {
+      await httpClient().post("/v1/PersonalInformations", details);
+      await props.onSuccess();
+      setIsReadOnly((isReadOnly) => !isReadOnly);
+    } catch (e) {
+      console.log("ERROR: ", e);
+    }
+  };
+
   return (
     <>
-      <form className="user-details__form" onSubmit={updateDetailsOnSubmit}>
+      <form
+        className="user-details__form"
+        onSubmit={
+          personalInformation ? updateDetailsOnSubmit : saveDetailsOnSubmit
+        }
+      >
         <label htmlFor="gender">Gender</label>
         <div className="flex">
           <input
@@ -47,7 +80,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
             checked={"Female" === gender}
             name="gender"
             onChange={() => setGender("Female")}
-            readOnly={isReadOnly}
+            disabled={isReadOnly}
           />
           <label htmlFor="">Female</label>
         </div>
@@ -58,7 +91,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
             checked={"Male" === gender}
             name="gender"
             onChange={() => setGender("Male")}
-            readOnly={isReadOnly}
+            disabled={isReadOnly}
           />
           <label htmlFor="">Male</label>
         </div>
@@ -69,7 +102,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
             checked={"Unknown" === gender}
             name="gender"
             onChange={() => setGender("Unknown")}
-            readOnly={isReadOnly}
+            disabled={isReadOnly}
           />
           <label htmlFor="">Unknown</label>
         </div>
@@ -94,7 +127,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
 
         {!isReadOnly && (
           <Button
-            text={"Update"}
+            text={personalInformation ? "Update" : "Save"}
             onClick={() => {}}
             type={"outlined"}
             btnType="submit"
@@ -105,7 +138,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
       {isReadOnly && (
         <div className="flex">
           <Button
-            text={"Edit details"}
+            text={personalInformation ? "Edit details" : "Add details"}
             onClick={() => setIsReadOnly((isReadOnly) => !isReadOnly)}
             type={"outlined"}
           ></Button>
