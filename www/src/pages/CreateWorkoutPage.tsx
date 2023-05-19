@@ -87,7 +87,7 @@ const CreateWorkoutPage: FC = () => {
 
   return (
     <>
-      <MainView title={`Add exercises to ${context.blockName}`}>
+      <MainView title={`Add workout with exercises to ${context.blockName}`}>
         <form style={formStyle} onSubmit={onSubmit}>
           <label htmlFor="workoutName" className="main-label">
             Workout name
@@ -141,7 +141,7 @@ const CreateWorkoutPage: FC = () => {
             onClick={() => {
               setIsModalVisible((isVisible) => !isVisible);
             }}
-            text={"Create new exercise"}
+            text={"Add new exercise"}
             type={"outlined"}
           ></Button>
           <Button

@@ -151,7 +151,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
       </form>
 
       {isReadOnly && (
-        <div className="flex">
+        <div style={{ display: "flex", gap: "30px" }}>
           <Button
             text={personalInformation ? "Edit details" : "Add details"}
             onClick={() => setIsReadOnly((isReadOnly) => !isReadOnly)}
