@@ -118,14 +118,21 @@ const CreateProgramPage: FC = () => {
               d="M450 856V606H200v-60h250V296h60v250h250v60H510v250h-60Z"
             />
           </svg>
-          <Button
-            text={"Create"}
-            onClick={() => {
-              console.log("create program click");
-            }}
-            type={"secondary"}
-            btnType="submit"
-          ></Button>
+          <div style={{ display: "flex", gap: "30px" }}>
+            <Button
+              text={"Create"}
+              onClick={() => {}}
+              type={"secondary"}
+              btnType="submit"
+            ></Button>
+            <Button
+              text={"Back"}
+              onClick={() => {
+                navigate("/programs");
+              }}
+              type={"outlined"}
+            ></Button>
+          </div>
         </form>
       </MainView>
     </>

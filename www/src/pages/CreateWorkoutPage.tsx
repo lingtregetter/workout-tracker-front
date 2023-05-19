@@ -5,6 +5,7 @@ import {
   FormEvent,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import MainView from "../components/main-view/MainView";
@@ -15,6 +16,7 @@ import Loading from "../components/loading/Loading";
 import { useNavigate } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
 import ExerciseModal from "../components/exerciseModal/ExerciseModal";
+import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
 
 const CreateWorkoutPage: FC = () => {
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();
@@ -25,7 +27,11 @@ const CreateWorkoutPage: FC = () => {
   const [avPerformanceTime, setAvPerformanceTime] = useState<number>();
   const navigate = useNavigate();
   const context = useContext(CreateWorkoutContext);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isExerciseModalVisible, setIsExerciseModalVisible] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (!context.trainingBlockId || !context.blockName) {
@@ -66,6 +72,7 @@ const CreateWorkoutPage: FC = () => {
     event.preventDefault();
 
     try {
+      console.log("siin");
       await httpClient().post("/v1/Workouts", {
         workoutName: workoutName,
         avPerformanceTime: avPerformanceTime,
@@ -73,10 +80,24 @@ const CreateWorkoutPage: FC = () => {
         exerciseIds: [...new Set(newWorkoutExerciseIds)],
       });
 
-      navigate(`/training-block/details/${context.trainingBlockId}`);
+      setShowConfirmation(true);
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const handleConfirmationYes = () => {
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+
+    setShowConfirmation(false);
+  };
+
+  const handleConfirmationNo = () => {
+    navigate(`/training-block/details/${context.trainingBlockId}`);
+
+    setShowConfirmation(false);
   };
 
   const formStyle: CSSProperties = {
@@ -87,8 +108,8 @@ const CreateWorkoutPage: FC = () => {
 
   return (
     <>
-      <MainView title={`Add workout with exercises to ${context.blockName}`}>
-        <form style={formStyle} onSubmit={onSubmit}>
+      <MainView title={`Create workout with exercises to ${context.blockName}`}>
+        <form style={formStyle} onSubmit={onSubmit} ref={formRef}>
           <label htmlFor="workoutName" className="main-label">
             Workout name
           </label>
@@ -139,25 +160,47 @@ const CreateWorkoutPage: FC = () => {
           )}
           <Button
             onClick={() => {
-              setIsModalVisible((isVisible) => !isVisible);
+              setIsExerciseModalVisible((isVisible) => !isVisible);
             }}
             text={"Add new exercise"}
             type={"outlined"}
           ></Button>
-          <Button
-            text={"Create"}
-            onClick={() => {
-              console.log("create workout");
-            }}
-            type={"secondary"}
-            btnType="submit"
-          ></Button>
+          <div style={{ display: "flex", gap: "30px" }}>
+            <Button
+              text={"Create"}
+              onClick={() => {
+                console.log("create workout");
+                setIsConfirmationModalVisible(true);
+              }}
+              type={"secondary"}
+              btnType="submit"
+            ></Button>
+            <Button
+              text={"Back"}
+              onClick={() => {
+                console.log("back");
+                console.log("Peaks viima /programs/details/programId");
+              }}
+              type={"outlined"}
+            ></Button>
+          </div>
         </form>
-        {isModalVisible && (
+        {isExerciseModalVisible && (
           <ExerciseModal
-            onCancel={() => setIsModalVisible((isVisible) => !isVisible)}
+            onCancel={() =>
+              setIsExerciseModalVisible((isVisible) => !isVisible)
+            }
             onSuccess={loadMuscleExercises}
           ></ExerciseModal>
+        )}
+        {showConfirmation && isConfirmationModalVisible && (
+          <ConfirmationModal
+            onCancel={() =>
+              setIsConfirmationModalVisible((isVisible) => !isVisible)
+            }
+            onYesClick={handleConfirmationYes}
+            onNoClick={handleConfirmationNo}
+          ></ConfirmationModal>
         )}
       </MainView>
     </>
