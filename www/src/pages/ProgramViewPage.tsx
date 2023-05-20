@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
 import Button from "../components/button/Button";
 import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
+import BlockModal from "../components/blockModal/BlockModal";
 
 const ProgramViewPage: FC = () => {
   const [trainingProgram, setTrainingProgram] = useState<TrainingProgram>();
@@ -16,6 +17,7 @@ const ProgramViewPage: FC = () => {
   const context = useContext(CreateWorkoutContext);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
+  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
 
   useEffect(() => {
     loadProgramBlocks();
@@ -71,12 +73,20 @@ const ProgramViewPage: FC = () => {
                 onAddClick={() => onAddClick(item.id, item.blockName)}
               ></OverviewRow>
             ))}
-            <Button
-              text={"Delete program"}
-              onClick={() => setIsConfirmationModalVisible(true)}
-              type={"outlined"}
-              style={{ marginTop: "40px" }}
-            ></Button>
+            <div style={{ display: "flex", gap: "30px" }}>
+              <Button
+                text={"Add blocks"}
+                onClick={() => setIsBlockModalVisible(true)}
+                type={"outlined"}
+                style={{ marginTop: "40px" }}
+              ></Button>
+              <Button
+                text={"Delete program"}
+                onClick={() => setIsConfirmationModalVisible(true)}
+                type={"outlined"}
+                style={{ marginTop: "40px" }}
+              ></Button>
+            </div>
             {isConfirmationModalVisible && (
               <ConfirmationModal
                 onCancel={() =>
@@ -89,6 +99,17 @@ const ProgramViewPage: FC = () => {
                   "You cannot undo this move and all your data about this program will be lost!"
                 }
               ></ConfirmationModal>
+            )}
+            {isBlockModalVisible && (
+              <BlockModal
+                onCancel={() => {
+                  setIsBlockModalVisible((isVisible) => !isVisible);
+                }}
+                onSuccess={async () => {
+                  await loadProgramBlocks();
+                  setIsBlockModalVisible(false);
+                }}
+              ></BlockModal>
             )}
           </>
         ) : (
