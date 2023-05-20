@@ -57,6 +57,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
           text={"Add"}
           type={"primary"}
           btnType="submit"
+          style={{ margin: "0 auto" }}
         ></Button>
       </form>
     </Modal>

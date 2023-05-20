@@ -164,6 +164,7 @@ const CreateWorkoutPage: FC = () => {
             }}
             text={"Add new exercise"}
             type={"outlined"}
+            style={{ marginBottom: "50px" }}
           ></Button>
           <div
             style={{ display: "flex", gap: "30px", justifyContent: "center" }}

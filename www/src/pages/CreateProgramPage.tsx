@@ -102,6 +102,7 @@ const CreateProgramPage: FC = () => {
           })}
 
           <svg
+            style={{ display: "block", margin: "0 auto 10px" }}
             id="add-btn"
             xmlns="http://www.w3.org/2000/svg"
             height="30"

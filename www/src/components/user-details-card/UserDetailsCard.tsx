@@ -146,6 +146,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
             onClick={() => {}}
             type={"outlined"}
             btnType="submit"
+            style={{ margin: "0 auto" }}
           ></Button>
         )}
       </form>

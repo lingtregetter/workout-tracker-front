@@ -78,14 +78,21 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
             <label htmlFor="exerciseDescription" className="modal-label">
               Exercise description
             </label>
-            <input
-              type="text"
+            <textarea
               name="exerciseDescription"
               className="modal-input"
+              style={{
+                border: "none",
+                boxSizing: "border-box",
+                height: "50px",
+                marginBottom: "10px",
+                padding: "10px",
+                width: "100%",
+              }}
               onChange={(event) => {
                 setExerciseDescription(event.target.value);
               }}
-            />
+            ></textarea>
             <label htmlFor="" className="modal-label">
               Select main working muscle(s)
             </label>
@@ -111,6 +118,7 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
               text={"Create"}
               type={"primary"}
               btnType="submit"
+              style={{ margin: "0 auto" }}
             ></Button>
           </form>
         </>
