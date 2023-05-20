@@ -38,13 +38,28 @@ const CreateProgramPage: FC = () => {
     width: "100%",
   };
 
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
+  const isProgramNameInvalid =
+    !programName ||
+    programName.length === 0 ||
+    containsOnlySpacesOrTabs(programName);
+
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
+
   return (
     <>
       <MainView title={"Create program"}>
         <form style={formStyle} onSubmit={onSubmit}>
           <label htmlFor="programName" className="main-label">
-            Program name
+            Program name *
           </label>
+          {isFormInvalid && isProgramNameInvalid && (
+            <p className="invalid-message">* Please add a program name</p>
+          )}
           <input
             type="text"
             name="programName"
@@ -121,7 +136,12 @@ const CreateProgramPage: FC = () => {
           >
             <Button
               text={"Create"}
-              onClick={() => {}}
+              onClick={() => {
+                if (isProgramNameInvalid) {
+                  if (!isFormInvalid) setIsFormInvalid((value) => !value);
+                  return;
+                }
+              }}
               type={"secondary"}
               btnType="submit"
             ></Button>
