@@ -2,7 +2,6 @@ import {
   CSSProperties,
   ChangeEvent,
   FC,
-  FormEvent,
   useContext,
   useEffect,
   useRef,
@@ -28,7 +27,6 @@ const CreateWorkoutPage: FC = () => {
   const navigate = useNavigate();
   const context = useContext(CreateWorkoutContext);
   const [isExerciseModalVisible, setIsExerciseModalVisible] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -68,35 +66,37 @@ const CreateWorkoutPage: FC = () => {
     }
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const saveWorkout = async () => {
+    await httpClient().post("/v1/Workouts", {
+      workoutName: workoutName,
+      avPerformanceTime: avPerformanceTime,
+      trainingBlockId: context.trainingBlockId,
+      exerciseIds: [...new Set(newWorkoutExerciseIds)],
+    });
+  };
 
+  const handleConfirmationYes = async () => {
     try {
-      await httpClient().post("/v1/Workouts", {
-        workoutName: workoutName,
-        avPerformanceTime: avPerformanceTime,
-        trainingBlockId: context.trainingBlockId,
-        exerciseIds: [...new Set(newWorkoutExerciseIds)],
-      });
+      await saveWorkout();
 
-      setShowConfirmation(true);
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+
+      setIsConfirmationModalVisible(false);
     } catch (e) {
-      console.log(e);
+      console.log("ERROR: ", e);
     }
   };
 
-  const handleConfirmationYes = () => {
-    if (formRef.current) {
-      formRef.current.reset();
+  const handleConfirmationNo = async () => {
+    try {
+      await saveWorkout();
+      navigate(`/training-block/details/${context.trainingBlockId}`);
+      setIsConfirmationModalVisible(false);
+    } catch (e) {
+      console.log("ERROR: ", e);
     }
-
-    setShowConfirmation(false);
-  };
-
-  const handleConfirmationNo = () => {
-    navigate(`/training-block/details/${context.trainingBlockId}`);
-
-    setShowConfirmation(false);
   };
 
   const formStyle: CSSProperties = {
@@ -105,13 +105,30 @@ const CreateWorkoutPage: FC = () => {
     width: "100%",
   };
 
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
+  const isWorkoutNameInvalid =
+    !workoutName ||
+    workoutName.length === 0 ||
+    containsOnlySpacesOrTabs(workoutName);
+
+  const isNewWorkoutExerciseIdsInvalid = newWorkoutExerciseIds.length === 0;
+
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
+
   return (
     <>
       <MainView title={`Create workout with exercises to ${context.blockName}`}>
-        <form style={formStyle} onSubmit={onSubmit} ref={formRef}>
+        <form style={formStyle} ref={formRef}>
           <label htmlFor="workoutName" className="main-label">
-            Workout name
+            Workout name *
           </label>
+          {isFormInvalid && isWorkoutNameInvalid && (
+            <p className="invalid-message">* Please add a workout name</p>
+          )}
           <input
             type="text"
             name="workoutName"
@@ -129,8 +146,12 @@ const CreateWorkoutPage: FC = () => {
               setAvPerformanceTime(+event.target.value);
             }}
           />
-          <label className="main-label">Select exercises</label>
-
+          <label className="main-label">Select exercises *</label>
+          {isFormInvalid && isNewWorkoutExerciseIdsInvalid && (
+            <p className="invalid-message">
+              * Please choose at least one exercise!
+            </p>
+          )}
           {muscleExercises ? (
             <>
               {muscleExercises.map((item) => (
@@ -157,7 +178,6 @@ const CreateWorkoutPage: FC = () => {
           ) : (
             <Loading />
           )}
-
           <Button
             onClick={() => {
               setIsExerciseModalVisible((isVisible) => !isVisible);
@@ -172,10 +192,13 @@ const CreateWorkoutPage: FC = () => {
             <Button
               text={"Create"}
               onClick={() => {
+                if (isWorkoutNameInvalid || isNewWorkoutExerciseIdsInvalid) {
+                  if (!isFormInvalid) setIsFormInvalid((value) => !value);
+                  return;
+                }
                 setIsConfirmationModalVisible(true);
               }}
               type={"secondary"}
-              btnType="submit"
             ></Button>
             <Button
               text={"Back"}
@@ -194,7 +217,7 @@ const CreateWorkoutPage: FC = () => {
             onSuccess={loadMuscleExercises}
           ></ExerciseModal>
         )}
-        {showConfirmation && isConfirmationModalVisible && (
+        {isConfirmationModalVisible && (
           <ConfirmationModal
             onCancel={() =>
               setIsConfirmationModalVisible((isVisible) => !isVisible)
