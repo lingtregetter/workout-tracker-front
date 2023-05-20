@@ -54,6 +54,7 @@ const WorkoutViewPage: FC = () => {
           <>
             {workout.exercises.map((item) => (
               <OverviewRow
+                hoverTitle="Add workout set"
                 title={item.exerciseName}
                 key={item.id}
                 isArrowBtnVisible={false}

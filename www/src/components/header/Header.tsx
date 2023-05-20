@@ -17,7 +17,7 @@ const Header: FC = () => {
     <header className="header">
       {auth.userId ? (
         <>
-          <Link to={"/programs"}>
+          <Link to={"/programs"} title="My programs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="40"
@@ -30,7 +30,7 @@ const Header: FC = () => {
               />
             </svg>
           </Link>
-          <Link to={"/user/details"}>
+          <Link to={"/user/details"} title="User details">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="40"

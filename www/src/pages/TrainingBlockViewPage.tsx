@@ -77,9 +77,12 @@ const TrainingBlockViewPage: FC = () => {
                     onArrowClick={() => onArrowClick(item.id)}
                     onAddClick={() => {}}
                   >
-                    <div style={{ marginTop: "5px" }}>
-                      Average performance time {item.avPerformanceTime} minutes
-                    </div>
+                    {item.avPerformanceTime !== 0 && (
+                      <div style={{ marginTop: "5px" }}>
+                        Average performance time {item.avPerformanceTime}{" "}
+                        minutes
+                      </div>
+                    )}
                   </OverviewRow>
                 ))}
               </div>

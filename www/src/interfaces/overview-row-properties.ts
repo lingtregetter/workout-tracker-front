@@ -7,4 +7,5 @@ export interface OverviewRowProperties {
   readonly onArrowClick: Function;
   readonly onAddClick: Function;
   readonly children?: ReactNode;
+  readonly hoverTitle?: string;
 }

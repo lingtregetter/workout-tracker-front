@@ -64,6 +64,7 @@ const ProgramViewPage: FC = () => {
           <>
             {trainingProgram.trainingBlocks.map((item) => (
               <OverviewRow
+                hoverTitle={`Create workout with exercises to ${item.blockName}`}
                 title={item.blockName}
                 key={item.id}
                 onArrowClick={() => onArrowClick(item.id)}
