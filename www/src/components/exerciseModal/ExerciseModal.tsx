@@ -112,9 +112,7 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
             ))}
 
             <Button
-              onClick={() => {
-                console.log("create exercise");
-              }}
+              onClick={() => {}}
               text={"Create"}
               type={"primary"}
               btnType="submit"

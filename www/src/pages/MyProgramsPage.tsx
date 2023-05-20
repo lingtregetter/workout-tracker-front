@@ -67,7 +67,6 @@ const MyProgramsPage: FC = () => {
         <Button
           onClick={() => {
             onCreateNewProgramClick();
-            console.log("create new program");
           }}
           text={"Create new program"}
           type={"secondary"}

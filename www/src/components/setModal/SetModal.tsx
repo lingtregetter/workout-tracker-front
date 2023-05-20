@@ -51,9 +51,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
           onChange={(event) => setWeight(+event.target.value)}
         />
         <Button
-          onClick={() => {
-            console.log("create exercise");
-          }}
+          onClick={() => {}}
           text={"Add"}
           type={"primary"}
           btnType="submit"
