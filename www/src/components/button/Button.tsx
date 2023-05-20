@@ -7,6 +7,7 @@ const Button: React.FC<ButtonProperties> = (props) => {
   return (
     <button
       className={`btn btn-${props.type}`}
+      style={props.style}
       onClick={() => props.onClick()}
       type={btnType}
     >
