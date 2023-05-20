@@ -4,11 +4,7 @@ import Button from "../components/button/Button";
 import { v4 as uuidv4 } from "uuid";
 import httpClient from "../services/http-client";
 import { useNavigate } from "react-router-dom";
-
-interface BlockInputData {
-  key: string;
-  value?: string;
-}
+import { BlockInputData } from "../interfaces/block-input-data";
 
 const CreateProgramPage: FC = () => {
   const navigate = useNavigate();
