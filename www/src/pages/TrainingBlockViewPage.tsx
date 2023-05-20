@@ -71,12 +71,16 @@ const TrainingBlockViewPage: FC = () => {
               <div style={gridStyles}>
                 {trainingBlock.workouts.map((item) => (
                   <OverviewRow
-                    title={`${item.workoutName} (~ ${item.avPerformanceTime}min)`}
+                    title={`${item.workoutName}`}
                     key={item.id}
                     isAddBtnVisible={false}
                     onArrowClick={() => onArrowClick(item.id)}
                     onAddClick={() => {}}
-                  ></OverviewRow>
+                  >
+                    <div style={{ marginTop: "5px" }}>
+                      Average performance time {item.avPerformanceTime} minutes
+                    </div>
+                  </OverviewRow>
                 ))}
               </div>
             )}

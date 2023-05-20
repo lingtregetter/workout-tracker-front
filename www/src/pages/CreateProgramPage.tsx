@@ -118,7 +118,10 @@ const CreateProgramPage: FC = () => {
               d="M450 856V606H200v-60h250V296h60v250h250v60H510v250h-60Z"
             />
           </svg>
-          <div style={{ display: "flex", gap: "30px" }}>
+
+          <div
+            style={{ display: "flex", gap: "30px", justifyContent: "center" }}
+          >
             <Button
               text={"Create"}
               onClick={() => {}}

@@ -64,7 +64,15 @@ const WorkoutViewPage: FC = () => {
                   setIsModalVisible((isVisible) => !isVisible);
                 }}
               >
-                <ul style={{ marginLeft: "20px", marginTop: "20px" }}>
+                <div style={{ marginTop: "5px" }}>
+                  {item.exerciseDescription}
+                </div>
+                <ul
+                  style={{
+                    marginLeft: "20px",
+                    marginTop: "20px",
+                  }}
+                >
                   {item.sets?.map((set, index) => {
                     return (
                       <li key={index}>

@@ -47,16 +47,20 @@ const MyProgramsPage: FC = () => {
           <>
             {programsList.map((item) => (
               <OverviewRow
-                title={`${item.trainingProgramName} ${
-                  item.trainingProgramDescription
-                    ? " - " + item.trainingProgramDescription
-                    : ""
-                }`}
+                title={`${item.trainingProgramName}`}
                 key={item.id}
                 isAddBtnVisible={false}
                 onArrowClick={() => onArrowClick(item.trainingProgramId)}
                 onAddClick={() => {}}
-              ></OverviewRow>
+              >
+                <div
+                  style={{
+                    marginTop: "5px",
+                  }}
+                >
+                  {item.trainingProgramDescription}
+                </div>
+              </OverviewRow>
             ))}
           </>
         )}
@@ -67,6 +71,7 @@ const MyProgramsPage: FC = () => {
           }}
           text={"Create new program"}
           type={"secondary"}
+          style={{ marginTop: "40px" }}
         ></Button>
       </MainView>
     </>

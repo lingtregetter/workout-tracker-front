@@ -72,7 +72,6 @@ const CreateWorkoutPage: FC = () => {
     event.preventDefault();
 
     try {
-      console.log("siin");
       await httpClient().post("/v1/Workouts", {
         workoutName: workoutName,
         avPerformanceTime: avPerformanceTime,
@@ -121,7 +120,7 @@ const CreateWorkoutPage: FC = () => {
             }}
           />
           <label htmlFor="avPerformanceTime" className="main-label">
-            Average performance time
+            Average performance time in minutes
           </label>
           <input
             type="number"
@@ -158,6 +157,7 @@ const CreateWorkoutPage: FC = () => {
           ) : (
             <Loading />
           )}
+
           <Button
             onClick={() => {
               setIsExerciseModalVisible((isVisible) => !isVisible);
@@ -165,11 +165,12 @@ const CreateWorkoutPage: FC = () => {
             text={"Add new exercise"}
             type={"outlined"}
           ></Button>
-          <div style={{ display: "flex", gap: "30px" }}>
+          <div
+            style={{ display: "flex", gap: "30px", justifyContent: "center" }}
+          >
             <Button
               text={"Create"}
               onClick={() => {
-                console.log("create workout");
                 setIsConfirmationModalVisible(true);
               }}
               type={"secondary"}
@@ -178,8 +179,7 @@ const CreateWorkoutPage: FC = () => {
             <Button
               text={"Back"}
               onClick={() => {
-                console.log("back");
-                console.log("Peaks viima /programs/details/programId");
+                navigate(-1);
               }}
               type={"outlined"}
             ></Button>
@@ -200,6 +200,7 @@ const CreateWorkoutPage: FC = () => {
             }
             onYesClick={handleConfirmationYes}
             onNoClick={handleConfirmationNo}
+            title={"Do you want to create another workout?"}
           ></ConfirmationModal>
         )}
       </MainView>
