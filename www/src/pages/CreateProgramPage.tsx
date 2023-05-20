@@ -26,7 +26,7 @@ const CreateProgramPage: FC = () => {
     const blocks = blocksInputData.map((i) => i.value).filter((i) => i);
     try {
       await httpClient(true).post("/v1/TrainingPrograms", {
-        programName: programName,
+        programName: programName?.trim(),
         programDescription: programDescription,
         blocks: blocks,
       });
