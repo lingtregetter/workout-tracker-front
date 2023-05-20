@@ -68,24 +68,34 @@ const TrainingBlockViewPage: FC = () => {
                 ></Button>
               </>
             ) : (
-              <div style={gridStyles}>
-                {trainingBlock.workouts.map((item) => (
-                  <OverviewRow
-                    title={`${item.workoutName}`}
-                    key={item.id}
-                    isAddBtnVisible={false}
-                    onArrowClick={() => onArrowClick(item.id)}
-                    onAddClick={() => {}}
-                  >
-                    {item.avPerformanceTime !== 0 && (
-                      <div style={{ marginTop: "5px" }}>
-                        Average performance time {item.avPerformanceTime}{" "}
-                        minutes
-                      </div>
-                    )}
-                  </OverviewRow>
-                ))}
-              </div>
+              <>
+                <div style={gridStyles}>
+                  {trainingBlock.workouts.map((item) => (
+                    <OverviewRow
+                      title={`${item.workoutName}`}
+                      key={item.id}
+                      isAddBtnVisible={false}
+                      onArrowClick={() => onArrowClick(item.id)}
+                      onAddClick={() => {}}
+                    >
+                      {item.avPerformanceTime !== 0 && (
+                        <div style={{ marginTop: "5px" }}>
+                          Average performance time {item.avPerformanceTime}{" "}
+                          minutes
+                        </div>
+                      )}
+                    </OverviewRow>
+                  ))}
+                </div>
+                <Button
+                  text={"Add workout"}
+                  onClick={() => {
+                    onButtonClick(trainingBlock.id, trainingBlock.blockName);
+                  }}
+                  type={"outlined"}
+                  style={{ marginTop: "40px" }}
+                ></Button>
+              </>
             )}
           </>
         ) : (
