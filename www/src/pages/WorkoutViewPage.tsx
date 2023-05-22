@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import httpClient from "../services/http-client";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Workout } from "../interfaces/workout";
 import Loading from "../components/loading/Loading";
 import SetModal from "../components/setModal/SetModal";
 import OverviewRow from "../components/overview-row/OverviewRow";
+import Button from "../components/button/Button";
+import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
 
 const WorkoutViewPage: FC = () => {
   const [workout, setWorkout] = useState<Workout>();
@@ -14,6 +16,9 @@ const WorkoutViewPage: FC = () => {
   const [selectedExerciseName, setSelectedExerciseName] = useState<string>();
   const [selectedWorkoutExerciseId, setSelectedWorkoutExerciseId] =
     useState<string>();
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadWorkoutExercises();
@@ -45,6 +50,20 @@ const WorkoutViewPage: FC = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const onYesClick = async () => {
+    try {
+      await httpClient().delete(`/v1/Workouts/${workoutId}`);
+
+      navigate(-1);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onNoClick = () => {
+    setIsConfirmationModalVisible(false);
   };
 
   return (
@@ -84,6 +103,12 @@ const WorkoutViewPage: FC = () => {
                 </ul>
               </OverviewRow>
             ))}
+            <Button
+              text={"Delete workout"}
+              onClick={() => setIsConfirmationModalVisible(true)}
+              type={"outlined"}
+              style={{ marginTop: "40px" }}
+            ></Button>
           </>
         ) : (
           <Loading />
@@ -95,6 +120,21 @@ const WorkoutViewPage: FC = () => {
             exerciseId={selectedWorkoutExerciseId!}
             exerciseName={selectedExerciseName!}
           ></SetModal>
+        )}
+        {isConfirmationModalVisible && (
+          <ConfirmationModal
+            onCancel={() =>
+              setIsConfirmationModalVisible((isVisible) => !isVisible)
+            }
+            onYesClick={onYesClick}
+            onNoClick={onNoClick}
+            title={`Are you sure you want to delete workout - ${
+              workout!.workoutName
+            }?`}
+            children={
+              "You cannot undo this move and all your data about this workout will be lost!"
+            }
+          ></ConfirmationModal>
         )}
       </MainView>
     </>

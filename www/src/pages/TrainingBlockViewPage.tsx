@@ -8,12 +8,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import Title from "../components/title/Title";
 import Button from "../components/button/Button";
 import CreateWorkoutContext from "../stores/create-workout-context";
+import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
 
 const TrainingBlockViewPage: FC = () => {
   const [trainingBlock, setTrainingBlock] = useState<TrainingBlock>();
   const { blockId } = useParams();
   const navigate = useNavigate();
   const context = useContext(CreateWorkoutContext);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
 
   useEffect(() => {
     loadBlockWorkouts();
@@ -39,6 +42,20 @@ const TrainingBlockViewPage: FC = () => {
     context.trainingBlockId = blockId;
     context.blockName = blockName;
     navigate(`/workout/create`);
+  };
+
+  const onYesClick = async () => {
+    try {
+      await httpClient().delete(`/v1/TrainingBlocks/${blockId}`);
+
+      navigate(-1);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onNoClick = () => {
+    setIsConfirmationModalVisible(false);
   };
 
   const gridStyles: CSSProperties = {
@@ -87,14 +104,35 @@ const TrainingBlockViewPage: FC = () => {
                     </OverviewRow>
                   ))}
                 </div>
-                <Button
-                  text={"Add workout"}
-                  onClick={() => {
-                    onButtonClick(trainingBlock.id, trainingBlock.blockName);
-                  }}
-                  type={"outlined"}
-                  style={{ marginTop: "40px" }}
-                ></Button>
+                <div style={{ display: "flex", gap: "30px" }}>
+                  <Button
+                    text={"Add workout"}
+                    onClick={() => {
+                      onButtonClick(trainingBlock.id, trainingBlock.blockName);
+                    }}
+                    type={"outlined"}
+                    style={{ marginTop: "40px" }}
+                  ></Button>
+                  <Button
+                    text={"Delete block"}
+                    onClick={() => setIsConfirmationModalVisible(true)}
+                    type={"outlined"}
+                    style={{ marginTop: "40px" }}
+                  ></Button>
+                </div>
+                {isConfirmationModalVisible && (
+                  <ConfirmationModal
+                    onCancel={() =>
+                      setIsConfirmationModalVisible((isVisible) => !isVisible)
+                    }
+                    onYesClick={onYesClick}
+                    onNoClick={onNoClick}
+                    title={`Are you sure you want to delete training block - ${trainingBlock.blockName}?`}
+                    children={
+                      "You cannot undo this move and all your data about this block will be lost!"
+                    }
+                  ></ConfirmationModal>
+                )}
               </>
             )}
           </>
