@@ -83,6 +83,7 @@ const CreateWorkoutPage: FC = () => {
         formRef.current.reset();
       }
 
+      setNewWorkoutExerciseIds([]);
       setIsConfirmationModalVisible(false);
     } catch (e) {
       console.log("ERROR: ", e);
@@ -93,6 +94,7 @@ const CreateWorkoutPage: FC = () => {
     try {
       await saveWorkout();
       navigate(`/training-block/details/${context.trainingBlockId}`);
+      setNewWorkoutExerciseIds([]);
       setIsConfirmationModalVisible(false);
     } catch (e) {
       console.log("ERROR: ", e);
