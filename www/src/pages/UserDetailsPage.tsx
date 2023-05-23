@@ -18,9 +18,7 @@ const UserDetailsPage: FC = () => {
         "/v1/PersonalInformations"
       );
       setPersonalInformation(response.data);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   return (

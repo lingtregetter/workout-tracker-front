@@ -21,9 +21,30 @@ function App() {
         <AuthProvider>
           <Header></Header>
           <Routes>
-            <Route path={"/"} element={<WelcomePage />}></Route>
-            <Route path={"/sign-in"} element={<SignInPage />}></Route>
-            <Route path={"/sign-up"} element={<SignUpPage />}></Route>
+            <Route
+              path={"/"}
+              element={
+                <ProtectedRoute>
+                  <WelcomePage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/sign-in"}
+              element={
+                <ProtectedRoute>
+                  <SignInPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"/sign-up"}
+              element={
+                <ProtectedRoute>
+                  <SignUpPage />
+                </ProtectedRoute>
+              }
+            ></Route>
             <Route
               path={"/user/details"}
               element={
