@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import httpClient from "../../../services/http-client";
 import { useParams } from "react-router-dom";
 import { BlockInputData } from "../../../interfaces/block-input-data";
-import PlusButton from "../../svg/PlusButton";
+import PlusButton from "../../svg-buttons/PlusButton";
 
 const BlockModal: FC<BlockModalProperties> = (props) => {
   const params = useParams();

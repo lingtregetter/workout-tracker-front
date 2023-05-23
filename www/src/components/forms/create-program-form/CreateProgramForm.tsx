@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import Button from "../../button/Button";
 import { useNavigate } from "react-router-dom";
 import { CreateProgramFormProperties } from "../../../interfaces/create-program-form-properties";
-import PlusButton from "../../svg/PlusButton";
+import PlusButton from "../../svg-buttons/PlusButton";
 
 const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
   const navigate = useNavigate();

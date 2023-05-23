@@ -1,8 +1,8 @@
 import { FC } from "react";
 import "./OverviewRow.scss";
 import { OverviewRowProperties } from "../../interfaces/overview-row-properties";
-import ForwardButton from "../svg/ForwardButton";
-import AddButton from "../svg/AddButton";
+import ForwardButton from "../svg-buttons/ForwardButton";
+import AddButton from "../svg-buttons/AddButton";
 
 const OverviewRow: FC<OverviewRowProperties> = (props) => {
   const isAddButtonVisible = props.isAddBtnVisible ?? true;

@@ -9,7 +9,7 @@ import OverviewRow from "../components/overview-row/OverviewRow";
 import Button from "../components/button/Button";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
-import DeleteButton from "../components/svg/DeleteButton";
+import DeleteButton from "../components/svg-buttons/DeleteButton";
 
 const WorkoutViewPage: FC = () => {
   const navigate = useNavigate();

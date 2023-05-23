@@ -3,8 +3,8 @@ import "./Header.scss";
 import Button from "../button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../stores/auth-context";
-import HomeButton from "../svg/HomeButton";
-import UserDetailsButton from "../svg/UserDetailsButton";
+import HomeButton from "../svg-buttons/HomeButton";
+import UserDetailsButton from "../svg-buttons/UserDetailsButton";
 
 const Header: FC = () => {
   const auth = useAuth();
