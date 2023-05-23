@@ -78,13 +78,20 @@ const TrainingBlockViewPage: FC = () => {
                   title={"You haven't created any workouts into the block yet!"}
                   size={28}
                 ></Title>
-                <Button
-                  text={"Create one here"}
-                  onClick={() => {
-                    onButtonClick(trainingBlock.id, trainingBlock.blockName);
-                  }}
-                  type={"secondary"}
-                ></Button>
+                <div style={{ display: "flex", gap: "30px" }}>
+                  <Button
+                    text={"Create one here"}
+                    onClick={() => {
+                      onButtonClick(trainingBlock.id, trainingBlock.blockName);
+                    }}
+                    type={"secondary"}
+                  ></Button>
+                  <Button
+                    text={"Delete block"}
+                    onClick={() => setIsConfirmationModalVisible(true)}
+                    type={"outlined"}
+                  ></Button>
+                </div>
               </>
             ) : (
               <>
@@ -122,7 +129,7 @@ const TrainingBlockViewPage: FC = () => {
                     style={{ marginTop: "40px" }}
                   ></Button>
                 </div>
-                {isConfirmationModalVisible && (
+                {/* {isConfirmationModalVisible && (
                   <ConfirmationModal
                     onCancel={() =>
                       setIsConfirmationModalVisible((isVisible) => !isVisible)
@@ -134,8 +141,21 @@ const TrainingBlockViewPage: FC = () => {
                       "You cannot undo this move and all your data about this block will be lost!"
                     }
                   ></ConfirmationModal>
-                )}
+                )} */}
               </>
+            )}
+            {isConfirmationModalVisible && (
+              <ConfirmationModal
+                onCancel={() =>
+                  setIsConfirmationModalVisible((isVisible) => !isVisible)
+                }
+                onYesClick={onYesClick}
+                onNoClick={onNoClick}
+                title={`Are you sure you want to delete training block - ${trainingBlock.blockName}?`}
+                children={
+                  "You cannot undo this move and all your data about this block will be lost!"
+                }
+              ></ConfirmationModal>
             )}
           </>
         ) : (

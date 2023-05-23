@@ -62,57 +62,62 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
 
   return (
     <>
-      <Modal onCancel={props.onCancel}>
-        <form onSubmit={onSubmit}>
-          <h1 className="modal-title" style={{ color: "#185a97" }}>
-            Select exercises
-          </h1>
-          {muscleExercises ? (
-            <>
-              {muscleExercises.map((item) => (
-                <div key={item.id}>
-                  <h3 style={{ color: "#185a97" }}>{item.muscleGroupName}</h3>
-                  {item.exercises.map((exercise) => {
-                    return (
-                      <div className="checkbox-row" key={exercise.id}>
-                        <input
-                          type="checkbox"
-                          name={exercise.exerciseName}
-                          value={exercise.id}
-                          onChange={handleCheckboxChange}
-                        />
-                        <label
-                          htmlFor={exercise.exerciseName}
-                          style={{ color: "#185a97" }}
-                        >
-                          {exercise.exerciseName}
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
-            </>
-          ) : (
-            <Loading />
-          )}
-          <Button
-            onClick={() => {
-              setIsExerciseModalVisible((isVisible) => !isVisible);
-            }}
-            text={"Add new exercise"}
-            type={"secondary"}
-            style={{ marginBottom: "25px" }}
-          ></Button>
-          <Button
-            onClick={() => {}}
-            text={"Add"}
-            type={"primary"}
-            style={{ margin: "0 auto" }}
-            btnType="submit"
-          ></Button>
-        </form>
-      </Modal>
+      {isExerciseModalVisible ? (
+        <></>
+      ) : (
+        <Modal onCancel={props.onCancel}>
+          <form onSubmit={onSubmit}>
+            <h1 className="modal-title" style={{ color: "#185a97" }}>
+              Select exercises
+            </h1>
+            {muscleExercises ? (
+              <>
+                {muscleExercises.map((item) => (
+                  <div key={item.id}>
+                    <h3 style={{ color: "#185a97" }}>{item.muscleGroupName}</h3>
+                    {item.exercises.map((exercise) => {
+                      return (
+                        <div className="checkbox-row" key={exercise.id}>
+                          <input
+                            type="checkbox"
+                            name={exercise.exerciseName}
+                            value={exercise.id}
+                            onChange={handleCheckboxChange}
+                          />
+                          <label
+                            htmlFor={exercise.exerciseName}
+                            style={{ color: "#185a97" }}
+                          >
+                            {exercise.exerciseName}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </>
+            ) : (
+              <Loading />
+            )}
+            <Button
+              onClick={() => {
+                setIsExerciseModalVisible((isVisible) => !isVisible);
+              }}
+              text={"Add new exercise"}
+              type={"secondary"}
+              style={{ marginBottom: "25px" }}
+            ></Button>
+            <Button
+              onClick={() => {}}
+              text={"Add"}
+              type={"primary"}
+              style={{ margin: "0 auto" }}
+              btnType="submit"
+            ></Button>
+          </form>
+        </Modal>
+      )}
+
       {isExerciseModalVisible && (
         <ExerciseModal
           onCancel={() => setIsExerciseModalVisible((isVisible) => !isVisible)}

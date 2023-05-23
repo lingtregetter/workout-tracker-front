@@ -18,7 +18,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
     event.preventDefault();
 
     try {
-      if (props.title === "Add a new repetition") {
+      if (props.title === "Add a new set") {
         await httpClient().post("/v1/WorkoutSets", {
           workoutExerciseId: props.exerciseId,
           usedWeight: weight,
@@ -70,7 +70,7 @@ const SetModal: FC<SetModalProperties> = (props) => {
         />
         <Button
           onClick={() => {}}
-          text={props.title === "Add a new repetition" ? "Add" : "Edit"}
+          text={props.title === "Add a new set" ? "Add" : "Edit"}
           type={"primary"}
           btnType="submit"
           style={{ margin: "0 auto" }}

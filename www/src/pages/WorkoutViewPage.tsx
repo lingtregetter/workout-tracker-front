@@ -9,6 +9,7 @@ import OverviewRow from "../components/overview-row/OverviewRow";
 import Button from "../components/button/Button";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
+import { cwd } from "process";
 
 const WorkoutViewPage: FC = () => {
   const [workout, setWorkout] = useState<Workout>();
@@ -28,6 +29,14 @@ const WorkoutViewPage: FC = () => {
   }>();
   const [isWorkoutExerciseModalVisible, setIsWorkoutExerciseModalVisible] =
     useState(false);
+  const [
+    isWorkoutExerciseConfirmationModalVisible,
+    setIsWorkoutExerciseConfirmationModalVisible,
+  ] = useState(false);
+  const [workoutExerciseToBeDeleted, setWorkoutExerciseToBeDeleted] =
+    useState<String>();
+  const [workoutExerciseNameToBeDeleted, setWorkoutExerciseNameToBeDeleted] =
+    useState<String>();
 
   useEffect(() => {
     loadWorkoutExercises();
@@ -75,6 +84,7 @@ const WorkoutViewPage: FC = () => {
 
   const onNoClick = () => {
     setIsConfirmationModalVisible(false);
+    setIsWorkoutExerciseConfirmationModalVisible(false);
   };
 
   const onSetDelete = async () => {
@@ -83,6 +93,19 @@ const WorkoutViewPage: FC = () => {
 
       loadWorkoutExercises();
       setIsEditSetModalVisible(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onWorkoutExerciseDelete = async () => {
+    try {
+      await httpClient().delete(
+        `/v1/WorkoutExercises/${workoutExerciseToBeDeleted}`
+      );
+
+      loadWorkoutExercises();
+      setIsWorkoutExerciseConfirmationModalVisible(false);
     } catch (e) {
       console.log(e);
     }
@@ -136,6 +159,25 @@ const WorkoutViewPage: FC = () => {
                     );
                   })}
                 </ul>
+
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                    onClick={() => {
+                      setIsWorkoutExerciseConfirmationModalVisible(true);
+                      setWorkoutExerciseToBeDeleted(item.workoutExerciseId);
+                      setWorkoutExerciseNameToBeDeleted(item.exerciseName);
+                    }}
+                  >
+                    <path
+                      fill="red"
+                      d="m361-299 119-121 120 121 47-48-119-121 119-121-47-48-120 121-119-121-48 48 120 121-120 121 48 48ZM261-120q-24 0-42-18t-18-42v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570Zm-438 0v570-570Z"
+                    />
+                  </svg>
+                </div>
               </OverviewRow>
             ))}
             <div style={{ display: "flex", gap: "30px" }}>
@@ -220,6 +262,21 @@ const WorkoutViewPage: FC = () => {
             onSuccess={loadWorkoutExercises}
             workoutId={workoutId!}
           ></WorkoutExerciseModal>
+        )}
+        {isWorkoutExerciseConfirmationModalVisible && (
+          <ConfirmationModal
+            onCancel={() =>
+              setIsWorkoutExerciseConfirmationModalVisible(
+                (isVisible) => !isVisible
+              )
+            }
+            onYesClick={onWorkoutExerciseDelete}
+            onNoClick={onNoClick}
+            title={`Are you sure you want to delete workout exercise - ${workoutExerciseNameToBeDeleted}?`}
+            children={
+              "You cannot undo this move and all your data about this workout exercise will be lost!"
+            }
+          ></ConfirmationModal>
         )}
       </MainView>
     </>
