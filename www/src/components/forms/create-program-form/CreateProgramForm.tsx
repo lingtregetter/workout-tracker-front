@@ -109,11 +109,13 @@ const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
                 };
 
                 setBlocksInputData((previous) => {
-                  const index = previous.findIndex(
-                    (item) => item.key === data.key
-                  );
-                  previous[index] = data;
-                  return previous;
+                  const newList = previous.map((previousInput) => {
+                    if (previousInput.key === input.key) {
+                      return data;
+                    }
+                    return previousInput;
+                  });
+                  return newList;
                 });
               }}
             />
