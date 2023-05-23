@@ -43,8 +43,6 @@ const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
 
   const isBlocksInvalid = blockInputDataToBlocks.length === 0;
 
-  // TODO: bloki lisamine korda vaja saada
-
   return (
     <>
       <form
@@ -144,8 +142,6 @@ const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
           <Button
             text={"Create"}
             onClick={() => {
-              console.log(blocksInputData);
-
               if (isProgramNameInvalid) {
                 if (!isFormInvalid) setIsFormInvalid((value) => !value);
                 return;

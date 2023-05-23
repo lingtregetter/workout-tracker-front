@@ -19,7 +19,14 @@ const BlockModal: FC<BlockModalProperties> = (props) => {
   const onSubmit = async (event: any) => {
     event.preventDefault();
 
-    const blocks = blocksInputData.map((i) => i.value).filter((i) => i);
+    const blocks = blocksInputData
+      .map((i) => {
+        if (i.value! && !containsOnlySpacesOrTabs(i.value?.trim())) {
+          return i.value?.trim();
+        }
+      })
+      .filter((i) => i);
+
     try {
       await httpClient(true).post("/v1/TrainingBlocks", {
         trainingProgramId: params.programId,
@@ -30,6 +37,11 @@ const BlockModal: FC<BlockModalProperties> = (props) => {
     } catch (e) {
       console.log("ERROR: ", e);
     }
+  };
+
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
   };
 
   return (
