@@ -12,6 +12,7 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
   const [exerciseName, setExerciseName] = useState<string>();
   const [exerciseDescription, setExerciseDescription] = useState<string>();
   const [muscleGroupIds, setMuscleGroupIds] = useState<string[]>([]);
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
 
   useEffect(() => {
     loadMuscleGroups();
@@ -58,6 +59,18 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
     }
   };
 
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
+  const isExerciseNameInvalid =
+    !exerciseName ||
+    exerciseName.length === 0 ||
+    containsOnlySpacesOrTabs(exerciseName);
+
+  const isMuscleGroupsInvalid = muscleGroupIds.length === 0;
+
   return (
     <Modal onCancel={props.onCancel}>
       {muscles.length !== 0 ? (
@@ -65,8 +78,13 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
           <h1 className="modal-title">Create new exercise</h1>
           <form onSubmit={onSubmit}>
             <label htmlFor="exerciseName" className="modal-label">
-              Exercise name
+              Exercise name *
             </label>
+            {isFormInvalid && isExerciseNameInvalid && (
+              <p className="invalid-message" style={{ color: "red" }}>
+                * Please add an exercise name
+              </p>
+            )}
             <input
               type="text"
               name="exerciseName"
@@ -94,8 +112,13 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
               }}
             ></textarea>
             <label htmlFor="" className="modal-label">
-              Select main working muscle(s)
+              Select main working muscle(s) *
             </label>
+            {isFormInvalid && isMuscleGroupsInvalid && (
+              <p className="invalid-message" style={{ color: "red" }}>
+                * Please choose at least one muscle group
+              </p>
+            )}
 
             {muscles.map((item) => (
               <div className="modal-checkbox-row" key={item.id}>
@@ -112,7 +135,12 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
             ))}
 
             <Button
-              onClick={() => {}}
+              onClick={() => {
+                if (isExerciseNameInvalid) {
+                  if (!isFormInvalid) setIsFormInvalid((value) => !value);
+                  return;
+                }
+              }}
               text={"Create"}
               type={"primary"}
               btnType="submit"

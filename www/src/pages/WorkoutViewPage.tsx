@@ -9,7 +9,6 @@ import OverviewRow from "../components/overview-row/OverviewRow";
 import Button from "../components/button/Button";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
-import { cwd } from "process";
 
 const WorkoutViewPage: FC = () => {
   const [workout, setWorkout] = useState<Workout>();
@@ -160,7 +159,14 @@ const WorkoutViewPage: FC = () => {
                   })}
                 </ul>
 
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div
+                  title="Delete exercise"
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    cursor: "pointer",
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24"

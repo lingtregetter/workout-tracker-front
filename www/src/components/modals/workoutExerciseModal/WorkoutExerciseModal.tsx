@@ -67,14 +67,14 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
       ) : (
         <Modal onCancel={props.onCancel}>
           <form onSubmit={onSubmit}>
-            <h1 className="modal-title" style={{ color: "#185a97" }}>
-              Select exercises
-            </h1>
+            <h1 className="modal-title">Select exercises</h1>
             {muscleExercises ? (
               <>
                 {muscleExercises.map((item) => (
                   <div key={item.id}>
-                    <h3 style={{ color: "#185a97" }}>{item.muscleGroupName}</h3>
+                    <h3 style={{ color: "#01010180", fontWeight: "bold" }}>
+                      {item.muscleGroupName}
+                    </h3>
                     {item.exercises.map((exercise) => {
                       return (
                         <div className="checkbox-row" key={exercise.id}>
@@ -86,7 +86,7 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
                           />
                           <label
                             htmlFor={exercise.exerciseName}
-                            style={{ color: "#185a97" }}
+                            style={{ color: "#01010180" }}
                           >
                             {exercise.exerciseName}
                           </label>
