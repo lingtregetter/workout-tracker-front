@@ -9,6 +9,43 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
+  // validation
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
+
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
+  const containsAnyNumbers = (inputString: string) => {
+    const pattern: RegExp = /\d/;
+    return pattern.test(inputString);
+  };
+
+  const containsAnySymbols = (inputString: string) => {
+    const pattern: RegExp = /[.!@#$%^&*()<>?/\|{}[\]'"~=+-]/;
+    return pattern.test(inputString);
+  };
+
+  const isFirstNameInvalid =
+    !firstName || firstName.length === 0 || containsOnlySpacesOrTabs(firstName);
+  const isLastNameInvalid =
+    !lastName || lastName.length === 0 || containsOnlySpacesOrTabs(lastName);
+  const isEmailInvalid =
+    !email ||
+    email.length === 0 ||
+    containsOnlySpacesOrTabs(email) ||
+    email.length < 5 ||
+    !email.includes("@") ||
+    !email.includes(".");
+  const isPasswordInvalid =
+    !password ||
+    password.length < 9 ||
+    containsOnlySpacesOrTabs(password) ||
+    !containsAnyNumbers(password) ||
+    !containsAnySymbols(password);
+  const isConfirmPasswordInvalid =
+    !confirmPassword || confirmPassword != password;
 
   return (
     <form
@@ -25,6 +62,9 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
       }}
     >
       <label htmlFor="firstName">First name</label>
+      {isFormInvalid && isFirstNameInvalid && (
+        <p className="invalid-message">* Please add a first name</p>
+      )}
       <input
         type="text"
         name="firstName"
@@ -34,6 +74,9 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
         }}
       />
       <label htmlFor="lastName">Last name</label>
+      {isFormInvalid && isLastNameInvalid && (
+        <p className="invalid-message">* Please add a last name</p>
+      )}
       <input
         type="text"
         name="lastName"
@@ -43,6 +86,9 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
         }}
       />
       <label htmlFor="email">Email</label>
+      {isFormInvalid && isEmailInvalid && (
+        <p className="invalid-message">* Please add a valid email</p>
+      )}
       <input
         type="email"
         name="email"
@@ -52,6 +98,9 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
         }}
       />
       <label htmlFor="password">Password</label>
+      {isFormInvalid && isPasswordInvalid && (
+        <p className="invalid-message">* Please add valid password</p>
+      )}
       <input
         type="password"
         name="password"
@@ -61,6 +110,9 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
         }}
       />
       <label htmlFor="confirm-password">Confirm password</label>
+      {isFormInvalid && isConfirmPasswordInvalid && (
+        <p className="invalid-message">* Please repeat password</p>
+      )}
       <input
         type="password"
         name="confirm-password"
@@ -71,7 +123,12 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
       />
       <Button
         text={"Sign up"}
-        onClick={() => {}}
+        onClick={() => {
+          if (isFirstNameInvalid) {
+            if (!isFormInvalid) setIsFormInvalid((value) => !value);
+            return;
+          }
+        }}
         type={"outlined"}
         btnType="submit"
       ></Button>
