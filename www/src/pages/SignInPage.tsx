@@ -1,6 +1,6 @@
 import { FC, FormEvent } from "react";
 import MainView from "../components/main-view/MainView";
-import LoginForm from "../components/login-form/LoginForm";
+import LoginForm from "../components/forms/login-form/LoginForm";
 import { useAuth } from "../stores/auth-context";
 
 const SignInPage: FC = () => {

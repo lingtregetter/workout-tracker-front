@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Title from "../components/title/Title";
 import Button from "../components/button/Button";
 import CreateWorkoutContext from "../stores/create-workout-context";
-import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
+import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 
 const TrainingBlockViewPage: FC = () => {
   const [trainingBlock, setTrainingBlock] = useState<TrainingBlock>();
@@ -31,6 +31,8 @@ const TrainingBlockViewPage: FC = () => {
       setTrainingBlock(response.data);
     } catch (e) {
       console.log(e);
+
+      navigate("/programs");
     }
   };
 

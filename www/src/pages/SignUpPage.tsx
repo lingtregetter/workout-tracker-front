@@ -1,5 +1,5 @@
 import { FC, FormEvent } from "react";
-import RegisterForm from "../components/register-form/RegisterForm";
+import RegisterForm from "../components/forms/register-form/RegisterForm";
 import MainView from "../components/main-view/MainView";
 import { useAuth } from "../stores/auth-context";
 

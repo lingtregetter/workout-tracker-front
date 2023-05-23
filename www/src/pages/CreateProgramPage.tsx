@@ -2,7 +2,7 @@ import { FC } from "react";
 import MainView from "../components/main-view/MainView";
 import httpClient from "../services/http-client";
 import { useNavigate } from "react-router-dom";
-import CreateProgramForm from "../components/create-program-form/CreateProgramForm";
+import CreateProgramForm from "../components/forms/create-program-form/CreateProgramForm";
 
 const CreateProgramPage: FC = () => {
   const navigate = useNavigate();

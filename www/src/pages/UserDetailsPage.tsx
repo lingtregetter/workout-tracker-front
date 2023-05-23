@@ -18,8 +18,11 @@ const UserDetailsPage: FC = () => {
         "/v1/PersonalInformations"
       );
       setPersonalInformation(response.data);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <>
       <MainView title={"User details"}>

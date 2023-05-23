@@ -14,8 +14,8 @@ import { MuscleExercise } from "../interfaces/muscle-exercise";
 import Loading from "../components/loading/Loading";
 import { useNavigate } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
-import ExerciseModal from "../components/exerciseModal/ExerciseModal";
-import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
+import ExerciseModal from "../components/modals/exerciseModal/ExerciseModal";
+import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 
 const CreateWorkoutPage: FC = () => {
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();

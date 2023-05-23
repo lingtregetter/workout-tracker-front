@@ -7,8 +7,8 @@ import OverviewRow from "../components/overview-row/OverviewRow";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
 import Button from "../components/button/Button";
-import ConfirmationModal from "../components/confirmationModal/ConfirmationModal";
-import BlockModal from "../components/blockModal/BlockModal";
+import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
+import BlockModal from "../components/modals/blockModal/BlockModal";
 
 const ProgramViewPage: FC = () => {
   const [trainingProgram, setTrainingProgram] = useState<TrainingProgram>();
@@ -32,6 +32,8 @@ const ProgramViewPage: FC = () => {
       setTrainingProgram(response.data);
     } catch (e) {
       console.log(e);
+
+      navigate("/programs");
     }
   };
 
