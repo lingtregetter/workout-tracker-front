@@ -1,0 +1,21 @@
+.set-modal-label {
+  color: #01010180;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.set-modal-input {
+  border: 1px solid #010101 !important;
+  border-radius: 5px !important;
+  margin-bottom: 25px !important;
+}
+
+.set-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+form .set-modal-input:last-of-type {
+  margin-bottom: 55px !important;
+}
