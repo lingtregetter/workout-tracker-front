@@ -16,6 +16,11 @@ const BlockModal: FC<BlockModalProperties> = (props) => {
     },
   ]);
 
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
   const onSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -37,11 +42,6 @@ const BlockModal: FC<BlockModalProperties> = (props) => {
     } catch (e) {
       console.log("ERROR: ", e);
     }
-  };
-
-  const containsOnlySpacesOrTabs = (inputString: string) => {
-    const pattern: RegExp = /^[ \t]+$/;
-    return pattern.test(inputString);
   };
 
   return (

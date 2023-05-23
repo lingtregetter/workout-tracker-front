@@ -11,31 +11,32 @@ import ConfirmationModal from "../components/modals/confirmationModal/Confirmati
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
 
 const WorkoutViewPage: FC = () => {
-  const [workout, setWorkout] = useState<Workout>();
+  const navigate = useNavigate();
   const { workoutId } = useParams();
-  const [isSetModalVisible, setIsSetModalVisible] = useState(false);
+  const [workout, setWorkout] = useState<Workout>();
   const [selectedExerciseName, setSelectedExerciseName] = useState<string>();
   const [selectedWorkoutExerciseId, setSelectedWorkoutExerciseId] =
     useState<string>();
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
-    useState(false);
-  const navigate = useNavigate();
-  const [isEditSetModalVisible, setIsEditSetModalVisible] = useState(false);
   const [selectedSet, setSelectedSet] = useState<{
     id: string;
     repAmount: number;
     usedWeight: number;
   }>();
+  const [workoutExerciseToBeDeleted, setWorkoutExerciseToBeDeleted] =
+    useState<String>();
+  const [workoutExerciseNameToBeDeleted, setWorkoutExerciseNameToBeDeleted] =
+    useState<String>();
+  // modal visibility
+  const [isSetModalVisible, setIsSetModalVisible] = useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const [isEditSetModalVisible, setIsEditSetModalVisible] = useState(false);
   const [isWorkoutExerciseModalVisible, setIsWorkoutExerciseModalVisible] =
     useState(false);
   const [
     isWorkoutExerciseConfirmationModalVisible,
     setIsWorkoutExerciseConfirmationModalVisible,
   ] = useState(false);
-  const [workoutExerciseToBeDeleted, setWorkoutExerciseToBeDeleted] =
-    useState<String>();
-  const [workoutExerciseNameToBeDeleted, setWorkoutExerciseNameToBeDeleted] =
-    useState<String>();
 
   useEffect(() => {
     loadWorkoutExercises();

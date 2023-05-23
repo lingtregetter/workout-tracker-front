@@ -11,10 +11,11 @@ import CreateWorkoutContext from "../stores/create-workout-context";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 
 const TrainingBlockViewPage: FC = () => {
-  const [trainingBlock, setTrainingBlock] = useState<TrainingBlock>();
-  const { blockId } = useParams();
   const navigate = useNavigate();
   const context = useContext(CreateWorkoutContext);
+  const { blockId } = useParams();
+  const [trainingBlock, setTrainingBlock] = useState<TrainingBlock>();
+  // modal visibility
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
 
@@ -129,19 +130,6 @@ const TrainingBlockViewPage: FC = () => {
                     style={{ marginTop: "40px" }}
                   ></Button>
                 </div>
-                {/* {isConfirmationModalVisible && (
-                  <ConfirmationModal
-                    onCancel={() =>
-                      setIsConfirmationModalVisible((isVisible) => !isVisible)
-                    }
-                    onYesClick={onYesClick}
-                    onNoClick={onNoClick}
-                    title={`Are you sure you want to delete training block - ${trainingBlock.blockName}?`}
-                    children={
-                      "You cannot undo this move and all your data about this block will be lost!"
-                    }
-                  ></ConfirmationModal>
-                )} */}
               </>
             )}
             {isConfirmationModalVisible && (

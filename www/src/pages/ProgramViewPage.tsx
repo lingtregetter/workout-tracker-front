@@ -11,10 +11,11 @@ import ConfirmationModal from "../components/modals/confirmationModal/Confirmati
 import BlockModal from "../components/modals/blockModal/BlockModal";
 
 const ProgramViewPage: FC = () => {
-  const [trainingProgram, setTrainingProgram] = useState<TrainingProgram>();
-  const { programId } = useParams();
   const navigate = useNavigate();
   const context = useContext(CreateWorkoutContext);
+  const { programId } = useParams();
+  const [trainingProgram, setTrainingProgram] = useState<TrainingProgram>();
+  // modal visibility
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);

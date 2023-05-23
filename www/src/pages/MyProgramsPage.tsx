@@ -8,8 +8,8 @@ import httpClient from "../services/http-client";
 import { useNavigate } from "react-router-dom";
 
 const MyProgramsPage: FC = () => {
-  const [programsList, setProgramsList] = useState<UserProgram[]>([]);
   const navigate = useNavigate();
+  const [programsList, setProgramsList] = useState<UserProgram[]>([]);
 
   useEffect(() => {
     loadPrograms();

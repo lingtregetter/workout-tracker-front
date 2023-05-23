@@ -18,18 +18,33 @@ import ExerciseModal from "../components/modals/exerciseModal/ExerciseModal";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 
 const CreateWorkoutPage: FC = () => {
+  const navigate = useNavigate();
+  const formRef = useRef<HTMLFormElement>(null);
+  const context = useContext(CreateWorkoutContext);
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();
   const [newWorkoutExerciseIds, setNewWorkoutExerciseIds] = useState<string[]>(
     []
   );
   const [workoutName, setWorkoutName] = useState<string>();
   const [avPerformanceTime, setAvPerformanceTime] = useState<number>();
-  const navigate = useNavigate();
-  const context = useContext(CreateWorkoutContext);
+  // modal visibility
   const [isExerciseModalVisible, setIsExerciseModalVisible] = useState(false);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  // validation
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
+
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
+  const isWorkoutNameInvalid =
+    !workoutName ||
+    workoutName.length === 0 ||
+    containsOnlySpacesOrTabs(workoutName);
+
+  const isNewWorkoutExerciseIdsInvalid = newWorkoutExerciseIds.length === 0;
 
   useEffect(() => {
     if (!context.trainingBlockId || !context.blockName) {
@@ -106,20 +121,6 @@ const CreateWorkoutPage: FC = () => {
     margin: "0 auto",
     width: "100%",
   };
-
-  const containsOnlySpacesOrTabs = (inputString: string) => {
-    const pattern: RegExp = /^[ \t]+$/;
-    return pattern.test(inputString);
-  };
-
-  const isWorkoutNameInvalid =
-    !workoutName ||
-    workoutName.length === 0 ||
-    containsOnlySpacesOrTabs(workoutName);
-
-  const isNewWorkoutExerciseIdsInvalid = newWorkoutExerciseIds.length === 0;
-
-  const [isFormInvalid, setIsFormInvalid] = useState(false);
 
   return (
     <>

@@ -12,6 +12,7 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
     []
   );
   const [muscleExercises, setMuscleExercises] = useState<MuscleExercise[]>();
+  // modal visbility
   const [isExerciseModalVisible, setIsExerciseModalVisible] = useState(false);
 
   useEffect(() => {

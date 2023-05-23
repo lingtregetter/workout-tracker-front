@@ -12,7 +12,19 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
   const [exerciseName, setExerciseName] = useState<string>();
   const [exerciseDescription, setExerciseDescription] = useState<string>();
   const [muscleGroupIds, setMuscleGroupIds] = useState<string[]>([]);
+  // validation
   const [isFormInvalid, setIsFormInvalid] = useState(false);
+
+  const containsOnlySpacesOrTabs = (inputString: string) => {
+    const pattern: RegExp = /^[ \t]+$/;
+    return pattern.test(inputString);
+  };
+
+  const isExerciseNameInvalid =
+    !exerciseName ||
+    exerciseName.length === 0 ||
+    containsOnlySpacesOrTabs(exerciseName);
+  const isMuscleGroupsInvalid = muscleGroupIds.length === 0;
 
   useEffect(() => {
     loadMuscleGroups();
@@ -58,18 +70,6 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
       );
     }
   };
-
-  const containsOnlySpacesOrTabs = (inputString: string) => {
-    const pattern: RegExp = /^[ \t]+$/;
-    return pattern.test(inputString);
-  };
-
-  const isExerciseNameInvalid =
-    !exerciseName ||
-    exerciseName.length === 0 ||
-    containsOnlySpacesOrTabs(exerciseName);
-
-  const isMuscleGroupsInvalid = muscleGroupIds.length === 0;
 
   return (
     <Modal onCancel={props.onCancel}>

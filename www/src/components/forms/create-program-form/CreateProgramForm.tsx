@@ -9,19 +9,14 @@ import { CreateProgramFormProperties } from "../../../interfaces/create-program-
 const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
   const navigate = useNavigate();
   const [programName, setProgramName] = useState<string>();
-  const [isFormInvalid, setIsFormInvalid] = useState(false);
   const [programDescription, setProgramDescription] = useState<string>();
   const [blocksInputData, setBlocksInputData] = useState<BlockInputData[]>([
     {
       key: `block-${uuidv4()}`,
     },
   ]);
-
-  const formStyle: CSSProperties = {
-    maxWidth: "500px",
-    margin: "0 auto",
-    width: "100%",
-  };
+  // validation
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
 
   const containsOnlySpacesOrTabs = (inputString: string) => {
     const pattern: RegExp = /^[ \t]+$/;
@@ -42,6 +37,12 @@ const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
     .filter((i) => i) as string[];
 
   const isBlocksInvalid = blockInputDataToBlocks.length === 0;
+
+  const formStyle: CSSProperties = {
+    maxWidth: "500px",
+    margin: "0 auto",
+    width: "100%",
+  };
 
   return (
     <>
