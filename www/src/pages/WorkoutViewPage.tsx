@@ -9,6 +9,7 @@ import OverviewRow from "../components/overview-row/OverviewRow";
 import Button from "../components/button/Button";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
+import DeleteButton from "../components/svg/DeleteButton";
 
 const WorkoutViewPage: FC = () => {
   const navigate = useNavigate();
@@ -168,22 +169,14 @@ const WorkoutViewPage: FC = () => {
                     cursor: "pointer",
                   }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    viewBox="0 -960 960 960"
-                    width="24"
+                  <DeleteButton
                     onClick={() => {
                       setIsWorkoutExerciseConfirmationModalVisible(true);
                       setWorkoutExerciseToBeDeleted(item.workoutExerciseId);
                       setWorkoutExerciseNameToBeDeleted(item.exerciseName);
                     }}
-                  >
-                    <path
-                      fill="red"
-                      d="m361-299 119-121 120 121 47-48-119-121 119-121-47-48-120 121-119-121-48 48 120 121-120 121 48 48ZM261-120q-24 0-42-18t-18-42v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570Zm-438 0v570-570Z"
-                    />
-                  </svg>
+                    fill="red"
+                  ></DeleteButton>
                 </div>
               </OverviewRow>
             ))}
@@ -239,25 +232,17 @@ const WorkoutViewPage: FC = () => {
             existingWorkoutSet={selectedSet}
           >
             <div title="Delete set forever" style={{ cursor: "pointer" }}>
-              <svg
+              <DeleteButton
+                onClick={() => {
+                  onSetDelete();
+                }}
                 style={{
                   display: "block",
                   margin: "0 auto",
                   marginTop: "10px",
                 }}
-                xmlns="http://www.w3.org/2000/svg"
-                height="24"
-                viewBox="0 -960 960 960"
-                width="24"
-                onClick={() => {
-                  onSetDelete();
-                }}
-              >
-                <path
-                  fill="#185a97"
-                  d="m361-299 119-121 120 121 47-48-119-121 119-121-47-48-120 121-119-121-48 48 120 121-120 121 48 48ZM261-120q-24 0-42-18t-18-42v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570Zm-438 0v570-570Z"
-                />
-              </svg>
+                fill="#185a97"
+              ></DeleteButton>
             </div>
           </SetModal>
         )}

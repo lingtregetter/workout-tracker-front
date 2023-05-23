@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import Button from "../../button/Button";
 import { useNavigate } from "react-router-dom";
 import { CreateProgramFormProperties } from "../../../interfaces/create-program-form-properties";
+import PlusButton from "../../svg/PlusButton";
 
 const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
   const navigate = useNavigate();
@@ -120,24 +121,14 @@ const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
             />
           );
         })}
-        <svg
-          style={{ display: "block", margin: "0 auto 10px" }}
-          id="add-btn"
-          xmlns="http://www.w3.org/2000/svg"
-          height="30"
-          viewBox="0 96 960 960"
-          width="30"
+        <PlusButton
           onClick={() => {
             setBlocksInputData((list: BlockInputData[]) => {
               return [...list, { key: `block-${uuidv4()}` }];
             });
           }}
-        >
-          <path
-            fill="#fff"
-            d="M450 856V606H200v-60h250V296h60v250h250v60H510v250h-60Z"
-          />
-        </svg>
+          fill="#fff"
+        ></PlusButton>
 
         <div style={{ display: "flex", gap: "30px", justifyContent: "center" }}>
           <Button
