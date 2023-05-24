@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import "./BlockModal.scss";
-import { BlockModalProperties } from "../../../interfaces/block-modal-properties";
+import { BlockModalProperties } from "../../../interfaces/modal-properties/block-modal-properties";
 import Modal from "../modal/Modal";
 import Button from "../../button/Button";
 import { v4 as uuidv4 } from "uuid";

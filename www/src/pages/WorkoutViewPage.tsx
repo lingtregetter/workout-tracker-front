@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import httpClient from "../services/http-client";
 import { useNavigate, useParams } from "react-router-dom";
-import { Workout } from "../interfaces/workout";
+import { Workout } from "../interfaces/domain-properties/workout";
 import Loading from "../components/loading/Loading";
 import SetModal from "../components/modals/setModal/SetModal";
 import OverviewRow from "../components/overview-row/OverviewRow";

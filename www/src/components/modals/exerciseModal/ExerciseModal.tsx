@@ -2,10 +2,10 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import "./ExerciseModal.scss";
 import Modal from "../modal/Modal";
 import Button from "../../button/Button";
-import { MuscleGroup } from "../../../interfaces/muscle-group";
+import { MuscleGroup } from "../../../interfaces/domain-properties/muscle-group";
 import httpClient from "../../../services/http-client";
 import Loading from "../../loading/Loading";
-import { ExerciseModalProperties } from "../../../interfaces/exercise-modal-properties";
+import { ExerciseModalProperties } from "../../../interfaces/modal-properties/exercise-modal-properties";
 
 const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
   const [muscles, setMuscles] = useState<MuscleGroup[]>([]);
@@ -44,6 +44,8 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isFormInvalid) return;
 
     try {
       await httpClient().post("/v1/Exercises", {

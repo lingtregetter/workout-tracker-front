@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import "./LoginForm.scss";
 import Button from "../../button/Button";
-import { LoginFormProperties } from "../../../interfaces/login-form-properties";
+import { LoginFormProperties } from "../../../interfaces/form-properties/login-form-properties";
 
 const LoginForm: FC<LoginFormProperties> = (props) => {
   const [email, setEmail] = useState<string>();

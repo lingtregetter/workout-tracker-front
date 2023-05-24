@@ -10,7 +10,7 @@ import {
 import MainView from "../components/main-view/MainView";
 import Button from "../components/button/Button";
 import httpClient from "../services/http-client";
-import { MuscleExercise } from "../interfaces/muscle-exercise";
+import { MuscleExercise } from "../interfaces/domain-properties/muscle-exercise";
 import Loading from "../components/loading/Loading";
 import { useNavigate } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";

@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { MuscleExercise } from "../../../interfaces/muscle-exercise";
+import { MuscleExercise } from "../../../interfaces/domain-properties/muscle-exercise";
 import Loading from "../../loading/Loading";
 import Button from "../../button/Button";
 import Modal from "../modal/Modal";
-import { WorkoutExerciseModalProperties } from "../../../interfaces/workout-exercise-modal-properties";
+import { WorkoutExerciseModalProperties } from "../../../interfaces/modal-properties/workout-exercise-modal-properties";
 import httpClient from "../../../services/http-client";
 import ExerciseModal from "../exerciseModal/ExerciseModal";
 

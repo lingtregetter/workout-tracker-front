@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import UserDetailsCard from "../components/user-details-card/UserDetailsCard";
 import httpClient from "../services/http-client";
-import { PersonalInformation } from "../interfaces/personal-information";
+import { PersonalInformation } from "../interfaces/domain-properties/personal-information";
 
 const UserDetailsPage: FC = () => {
   const [personalInformation, setPersonalInformation] =

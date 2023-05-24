@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import "./RegisterForm.scss";
 import Button from "../../button/Button";
-import { RegisterFormProperties } from "../../../interfaces/register-form-properties";
+import { RegisterFormProperties } from "../../../interfaces/form-properties/register-form-properties";
 
 const RegisterForm: FC<RegisterFormProperties> = (props) => {
   const [firstName, setFirstName] = useState<string>();
@@ -124,7 +124,12 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
       <Button
         text={"Sign up"}
         onClick={() => {
-          if (isFirstNameInvalid || isLastNameInvalid || isEmailInvalid || isPasswordInvalid) {
+          if (
+            isFirstNameInvalid ||
+            isLastNameInvalid ||
+            isEmailInvalid ||
+            isPasswordInvalid
+          ) {
             if (!isFormInvalid) setIsFormInvalid((value) => !value);
             return;
           }

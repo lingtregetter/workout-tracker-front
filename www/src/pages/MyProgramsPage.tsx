@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import Button from "../components/button/Button";
 import Title from "../components/title/Title";
-import { UserProgram } from "../interfaces/user-program";
+import { UserProgram } from "../interfaces/domain-properties/user-program";
 import OverviewRow from "../components/overview-row/OverviewRow";
 import httpClient from "../services/http-client";
 import { useNavigate } from "react-router-dom";

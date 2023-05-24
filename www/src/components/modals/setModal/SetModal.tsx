@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useState } from "react";
 import "./SetModal.scss";
 import Modal from "../modal/Modal";
-import { SetModalProperties } from "../../../interfaces/set-modal-properties";
+import { SetModalProperties } from "../../../interfaces/modal-properties/set-modal-properties";
 import Button from "../../button/Button";
 import httpClient from "../../../services/http-client";
 

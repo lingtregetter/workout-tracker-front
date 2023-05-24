@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import httpClient from "../services/http-client";
-import { TrainingProgram } from "../interfaces/training-program";
+import { TrainingProgram } from "../interfaces/domain-properties/training-program";
 import Loading from "../components/loading/Loading";
 import OverviewRow from "../components/overview-row/OverviewRow";
 import { useNavigate, useParams } from "react-router-dom";

@@ -2,7 +2,7 @@ import { FC } from "react";
 import "./ConfirmationModal.scss";
 import Modal from "../modal/Modal";
 import Button from "../../button/Button";
-import { ConfirmationModalProperties } from "../../../interfaces/confirmation-modal-properties";
+import { ConfirmationModalProperties } from "../../../interfaces/modal-properties/confirmation-modal-properties";
 
 const ConfirmationModal: FC<ConfirmationModalProperties> = (props) => {
   return (
