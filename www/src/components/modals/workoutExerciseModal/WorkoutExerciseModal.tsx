@@ -48,6 +48,7 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     try {
       await httpClient().post("/v1/WorkoutExercises", {
         workoutId: props.workoutId,

@@ -10,6 +10,7 @@ import Button from "../components/button/Button";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
 import DeleteButton from "../components/svg-buttons/DeleteButton";
+import Title from "../components/title/Title";
 
 const WorkoutViewPage: FC = () => {
   const navigate = useNavigate();
@@ -117,81 +118,100 @@ const WorkoutViewPage: FC = () => {
       <MainView title={workout?.workoutName ?? ""}>
         {workout ? (
           <>
-            {workout.exercises.map((item) => (
-              <OverviewRow
-                hoverTitle="Add workout set"
-                title={item.exerciseName}
-                key={item.id}
-                isArrowBtnVisible={false}
-                onArrowClick={() => {}}
-                onAddClick={() => {
-                  setSelectedWorkoutExerciseId(item.workoutExerciseId);
-                  setSelectedExerciseName(item.exerciseName);
-                  setIsSetModalVisible((isVisible) => !isVisible);
-                }}
-              >
-                <div style={{ marginTop: "5px" }}>
-                  {item.exerciseDescription}
-                </div>
-                <ul
-                  style={{
-                    marginLeft: "20px",
-                    marginTop: "20px",
-                  }}
-                >
-                  {item.sets?.map((set, index) => {
-                    return (
-                      <li
-                        key={index}
-                        style={{ cursor: "pointer", marginBottom: "2.5px" }}
-                        title="Edit set"
-                        onClick={() => {
-                          setSelectedExerciseName(item.exerciseName);
-                          setIsEditSetModalVisible(true);
-                          setSelectedSet({
-                            id: set.id,
-                            repAmount: set.repNumber,
-                            usedWeight: set.usedWeight,
-                          });
-                        }}
-                      >
-                        {set.repNumber} x {set.usedWeight}
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <div
-                  title="Delete exercise"
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    cursor: "pointer",
-                  }}
-                >
-                  <DeleteButton
-                    onClick={() => {
-                      setIsWorkoutExerciseConfirmationModalVisible(true);
-                      setWorkoutExerciseToBeDeleted(item.workoutExerciseId);
-                      setWorkoutExerciseNameToBeDeleted(item.exerciseName);
+            {workout.exercises.length === 0 ? (
+              <>
+                <Title
+                  title={"You don't have any exercises in this workout yet!"}
+                  size={28}
+                ></Title>
+              </>
+            ) : (
+              <>
+                {workout.exercises.map((item) => (
+                  <OverviewRow
+                    hoverTitle="Add workout set"
+                    title={item.exerciseName}
+                    key={item.id}
+                    isArrowBtnVisible={false}
+                    onArrowClick={() => {}}
+                    onAddClick={() => {
+                      setSelectedWorkoutExerciseId(item.workoutExerciseId);
+                      setSelectedExerciseName(item.exerciseName);
+                      setIsSetModalVisible((isVisible) => !isVisible);
                     }}
-                    fill="red"
-                  ></DeleteButton>
-                </div>
-              </OverviewRow>
-            ))}
+                  >
+                    <div style={{ marginTop: "5px" }}>
+                      {item.exerciseDescription}
+                    </div>
+                    <ul
+                      style={{
+                        marginLeft: "20px",
+                        marginTop: "20px",
+                      }}
+                    >
+                      {item.sets?.map((set, index) => {
+                        return (
+                          <li
+                            key={index}
+                            style={{ cursor: "pointer", marginBottom: "2.5px" }}
+                            title="Edit set"
+                            onClick={() => {
+                              setSelectedExerciseName(item.exerciseName);
+                              setIsEditSetModalVisible(true);
+                              setSelectedSet({
+                                id: set.id,
+                                repAmount: set.repNumber,
+                                usedWeight: set.usedWeight,
+                              });
+                            }}
+                          >
+                            {set.repNumber} x {set.usedWeight}
+                          </li>
+                        );
+                      })}
+                    </ul>
+
+                    <div
+                      title="Delete exercise"
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <DeleteButton
+                        onClick={() => {
+                          setIsWorkoutExerciseConfirmationModalVisible(true);
+                          setWorkoutExerciseToBeDeleted(item.workoutExerciseId);
+                          setWorkoutExerciseNameToBeDeleted(item.exerciseName);
+                        }}
+                        fill="red"
+                      ></DeleteButton>
+                    </div>
+                  </OverviewRow>
+                ))}
+              </>
+            )}
             <div style={{ display: "flex", gap: "30px" }}>
               <Button
                 text={"Add exercise"}
                 onClick={() => setIsWorkoutExerciseModalVisible(true)}
                 type={"outlined"}
-                style={{ marginTop: "40px" }}
+                style={
+                  workout.exercises.length !== 0
+                    ? { marginTop: "40px" }
+                    : { marginTop: "0" }
+                }
               ></Button>
               <Button
                 text={"Delete workout"}
                 onClick={() => setIsConfirmationModalVisible(true)}
                 type={"outlined"}
-                style={{ marginTop: "40px" }}
+                style={
+                  workout.exercises.length !== 0
+                    ? { marginTop: "40px" }
+                    : { marginTop: "0" }
+                }
               ></Button>
             </div>
           </>
