@@ -45,7 +45,7 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
     !containsAnyNumbers(password) ||
     !containsAnySymbols(password);
   const isConfirmPasswordInvalid =
-    !confirmPassword || confirmPassword != password;
+    !confirmPassword || confirmPassword !== password;
 
   return (
     <form
