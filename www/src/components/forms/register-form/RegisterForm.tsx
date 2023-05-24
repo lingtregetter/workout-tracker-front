@@ -124,7 +124,7 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
       <Button
         text={"Sign up"}
         onClick={() => {
-          if (isFirstNameInvalid) {
+          if (isFirstNameInvalid || isLastNameInvalid || isEmailInvalid || isPasswordInvalid) {
             if (!isFormInvalid) setIsFormInvalid((value) => !value);
             return;
           }

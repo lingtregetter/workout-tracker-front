@@ -134,7 +134,7 @@ const CreateProgramForm: FC<CreateProgramFormProperties> = (props) => {
           <Button
             text={"Create"}
             onClick={() => {
-              if (isProgramNameInvalid) {
+              if (isProgramNameInvalid || isBlocksInvalid) {
                 if (!isFormInvalid) setIsFormInvalid((value) => !value);
                 return;
               }
