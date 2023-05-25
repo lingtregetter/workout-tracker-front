@@ -29,8 +29,10 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
 
   const isFirstNameInvalid =
     !firstName || firstName.length === 0 || containsOnlySpacesOrTabs(firstName);
+
   const isLastNameInvalid =
     !lastName || lastName.length === 0 || containsOnlySpacesOrTabs(lastName);
+
   const isEmailInvalid =
     !email ||
     email.length === 0 ||
@@ -38,12 +40,14 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
     email.length < 5 ||
     !email.includes("@") ||
     !email.includes(".");
+
   const isPasswordInvalid =
     !password ||
     password.length < 9 ||
     containsOnlySpacesOrTabs(password) ||
     !containsAnyNumbers(password) ||
     !containsAnySymbols(password);
+
   const isConfirmPasswordInvalid =
     !confirmPassword || confirmPassword !== password;
 
