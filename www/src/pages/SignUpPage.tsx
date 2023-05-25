@@ -1,10 +1,12 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useState } from "react";
 import RegisterForm from "../components/forms/register-form/RegisterForm";
 import MainView from "../components/main-view/MainView";
 import { useAuth } from "../stores/auth-context";
 
 const SignUpPage: FC = () => {
   const auth = useAuth();
+  const [error, setError] = useState(false);
+  const [userEmail, setUserEmail] = useState<string>();
 
   const onSubmit = async (
     event: FormEvent<HTMLFormElement>,
@@ -15,15 +17,22 @@ const SignUpPage: FC = () => {
   ) => {
     event.preventDefault();
     try {
+      setUserEmail(email);
       await auth.register(firstName, lastName, email, password);
     } catch (e) {
       console.log("ERROR: ", e);
+      setError(true);
     }
   };
 
   return (
     <>
       <MainView title={"Sign up"}>
+        {error && (
+          <p style={{ color: "#edafb8", fontWeight: "bold" }}>
+            User with email {userEmail} is already registered
+          </p>
+        )}
         <RegisterForm
           onSubmit={async (event, firstName, lastName, email, password) => {
             onSubmit(event, firstName, lastName, email, password);

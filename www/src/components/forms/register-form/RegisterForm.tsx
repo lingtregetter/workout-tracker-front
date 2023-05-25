@@ -122,6 +122,7 @@ const RegisterForm: FC<RegisterFormProperties> = (props) => {
         }}
       />
       <Button
+        style={{ margin: "0 auto" }}
         text={"Sign up"}
         onClick={() => {
           if (

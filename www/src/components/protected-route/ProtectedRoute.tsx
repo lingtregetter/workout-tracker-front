@@ -9,6 +9,8 @@ const ProtectedRoute: FC<{ children: ReactNode }> = (props) => {
   const pathname = location.pathname;
 
   useEffect(() => {
+    if (!userId && pathname === "/") return;
+
     if (!userId) {
       navigate("/sign-in");
     } else if (["/sign-in", "/sign-up", "/"].includes(pathname) && userId) {

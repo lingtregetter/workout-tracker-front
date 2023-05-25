@@ -76,7 +76,7 @@ const ProgramViewPage: FC = () => {
                 onAddClick={() => onAddClick(item.id, item.blockName)}
               ></OverviewRow>
             ))}
-            <div style={{ display: "flex", gap: "30px" }}>
+            <div style={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
               <Button
                 text={"Add blocks"}
                 onClick={() => setIsBlockModalVisible(true)}

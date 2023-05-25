@@ -79,7 +79,9 @@ const TrainingBlockViewPage: FC = () => {
                   title={"You haven't created any workouts into the block yet!"}
                   size={28}
                 ></Title>
-                <div style={{ display: "flex", gap: "30px" }}>
+                <div
+                  style={{ display: "flex", gap: "30px", marginBottom: "10px" }}
+                >
                   <Button
                     text={"Create one here"}
                     onClick={() => {

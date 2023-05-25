@@ -1,10 +1,11 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import LoginForm from "../components/forms/login-form/LoginForm";
 import { useAuth } from "../stores/auth-context";
 
 const SignInPage: FC = () => {
   const auth = useAuth();
+  const [error, setError] = useState(false);
 
   const onSubmit = async (
     event: FormEvent<HTMLFormElement>,
@@ -16,12 +17,18 @@ const SignInPage: FC = () => {
       await auth.logIn(email, password);
     } catch (e) {
       console.log("ERROR: ", e);
+      setError(true);
     }
   };
 
   return (
     <>
       <MainView title={"Sign in"}>
+        {error && (
+          <p style={{ color: "#edafb8", fontWeight: "bold" }}>
+            Invalid credentials
+          </p>
+        )}
         <LoginForm
           onSubmit={async (event, email, password) => {
             onSubmit(event, email, password);

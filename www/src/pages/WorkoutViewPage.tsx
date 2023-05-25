@@ -192,7 +192,7 @@ const WorkoutViewPage: FC = () => {
                 ))}
               </>
             )}
-            <div style={{ display: "flex", gap: "30px" }}>
+            <div style={{ display: "flex", gap: "30px", marginBottom: "10px" }}>
               <Button
                 text={"Add exercise"}
                 onClick={() => setIsWorkoutExerciseModalVisible(true)}

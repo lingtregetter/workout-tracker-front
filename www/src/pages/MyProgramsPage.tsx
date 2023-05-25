@@ -70,7 +70,7 @@ const MyProgramsPage: FC = () => {
           }}
           text={"Create new program"}
           type={"secondary"}
-          style={{ marginTop: "40px" }}
+          style={{ marginTop: "40px", marginBottom: "10px" }}
         ></Button>
       </MainView>
     </>

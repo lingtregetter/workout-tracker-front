@@ -12,7 +12,7 @@ import Button from "../components/button/Button";
 import httpClient from "../services/http-client";
 import { MuscleExercise } from "../interfaces/domain-properties/muscle-exercise";
 import Loading from "../components/loading/Loading";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
 import ExerciseModal from "../components/modals/exerciseModal/ExerciseModal";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
@@ -48,7 +48,7 @@ const CreateWorkoutPage: FC = () => {
 
   useEffect(() => {
     if (!context.trainingBlockId || !context.blockName) {
-      navigate("/programs");
+      return;
     }
 
     loadMuscleExercises();
@@ -122,6 +122,22 @@ const CreateWorkoutPage: FC = () => {
     width: "100%",
   };
 
+  if (!context.blockName || !context.trainingBlockId) {
+    return (
+      <>
+        <MainView title="Oops, something went wrong :(">
+          <Link to={"/programs"}>
+            <Button
+              text={"Back to programs"}
+              onClick={() => {}}
+              type={"outlined"}
+            ></Button>
+          </Link>
+        </MainView>
+      </>
+    );
+  }
+
   return (
     <>
       <MainView title={`Create workout with exercises to ${context.blockName}`}>
@@ -190,7 +206,12 @@ const CreateWorkoutPage: FC = () => {
             style={{ marginBottom: "50px" }}
           ></Button>
           <div
-            style={{ display: "flex", gap: "30px", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              gap: "30px",
+              justifyContent: "center",
+              marginBottom: "10px",
+            }}
           >
             <Button
               text={"Create"}
