@@ -7,7 +7,8 @@ const httpClient = (isAuthenticated = true) => {
   }
 
   return axios.create({
-    baseURL: "http://localhost:5069/api",
+    // baseURL: "http://localhost:5069/api",
+    baseURL: "https://workout-tracker-app.azurewebsites.net/api",
     headers,
   });
 };
