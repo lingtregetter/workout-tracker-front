@@ -13,6 +13,7 @@ import WorkoutViewPage from "./pages/WorkoutViewPage";
 import CreateWorkoutPage from "./pages/CreateWorkoutPage";
 import { AuthProvider } from "./stores/auth-context";
 import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+import NotFoundPage from "./pages/404";
 
 function App() {
   return (
@@ -98,6 +99,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CreateWorkoutPage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path={"*"}
+              element={
+                <ProtectedRoute>
+                  <NotFoundPage />
                 </ProtectedRoute>
               }
             ></Route>
