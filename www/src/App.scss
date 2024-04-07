@@ -1,3 +1,5 @@
+@use "./colors" as *;
+
 body {
-  background: linear-gradient(to right, #185a97, #43cea2);
+  background: linear-gradient(to right, $blue, $green);
 }

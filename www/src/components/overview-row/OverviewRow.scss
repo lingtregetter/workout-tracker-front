@@ -1,5 +1,7 @@
+@use "../../colors" as *;
+
 .overview {
-  background: #f1f1f1;
+  background: $grey;
   border-radius: 5px;
   box-sizing: border-box;
   margin-bottom: 10px;
@@ -13,7 +15,7 @@
 }
 
 .box-title {
-  color: #185a97;
+  color: $blue1;
   font-size: 30px;
   font-weight: 700;
   margin-bottom: 0;

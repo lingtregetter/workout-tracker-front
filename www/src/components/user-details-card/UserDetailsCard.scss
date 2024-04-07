@@ -1,3 +1,5 @@
+@use "../../colors" as *;
+
 .user-details__form {
   max-width: 500px;
   width: 100%;
@@ -18,11 +20,11 @@
 
   input {
     display: block;
-    border: 1px solid #ffffff;
+    border: 1px solid $white;
     box-sizing: border-box;
     background: transparent;
     border-radius: 5px;
-    caret-color: #ffffff;
-    color: #ffffff;
+    caret-color: $white;
+    color: $white;
   }
 }

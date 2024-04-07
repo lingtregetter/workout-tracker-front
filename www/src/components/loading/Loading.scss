@@ -1,6 +1,8 @@
+@use "../../colors" as *;
+
 .loader {
-  border: 8px solid #fff;
-  border-top: 8px solid #185a9d;
+  border: 8px solid $white;
+  border-top: 8px solid $blue;
   border-radius: 50%;
   width: 40px;
   height: 40px;

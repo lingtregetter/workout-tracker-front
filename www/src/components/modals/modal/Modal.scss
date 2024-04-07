@@ -1,5 +1,7 @@
+@use "../../../colors" as *;
+
 .backdrop {
-  background: rgba(0, 0, 0, 0.75);
+  background: $black75;
   height: 100vh;
   left: 0;
   position: fixed;
@@ -9,7 +11,7 @@
 }
 
 .modal {
-  background: #fff;
+  background: $white;
   box-sizing: border-box;
   left: 0;
   margin: 0 auto;

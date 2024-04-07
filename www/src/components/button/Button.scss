@@ -1,3 +1,5 @@
+@use "../../colors" as *;
+
 .btn {
   border-radius: 10px;
   display: block;
@@ -8,36 +10,36 @@
   transition-duration: 0.25s;
 
   &.btn-primary {
-    background: #185a9d;
-    border: 1px solid #185a9d;
-    color: #fff;
+    background: $blue;
+    border: 1px solid $blue;
+    color: $white;
 
     &:hover {
-      background-color: white;
-      color: #185a9d;
+      background-color: $white;
+      color: $blue;
     }
   }
 
   &.btn-secondary {
-    background: #fff;
-    border: 1px solid #185a9d;
-    color: #185a9d;
+    background: $white;
+    border: 1px solid $blue;
+    color: $blue;
 
     &:hover {
-      background-color: #185a9d;
-      color: white;
+      background-color: $blue;
+      color: $white;
     }
   }
 
   &.btn-outlined {
     background: transparent;
-    border: 1px solid #fff;
-    color: #fff;
+    border: 1px solid $white;
+    color: $white;
 
     &:hover {
-      background-color: white;
-      border: 1px solid #185a9d;
-      color: #185a9d;
+      background-color: $white;
+      border: 1px solid $blue;
+      color: $blue;
     }
   }
 }
