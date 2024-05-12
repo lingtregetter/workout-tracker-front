@@ -4,10 +4,10 @@ import { BlockModalProperties } from "../../../interfaces/modal-properties/block
 import Modal from "../modal/Modal";
 import Button from "../../button/Button";
 import { v4 as uuidv4 } from "uuid";
-import httpClient from "../../../services/http-client";
 import { useParams } from "react-router-dom";
 import { BlockInputData } from "../../../interfaces/block-input-data";
 import PlusButton from "../../svg-buttons/PlusButton";
+import { createTrainingBlocks } from "../../../services/training.service";
 
 const BlockModal: FC<BlockModalProperties> = (props) => {
   const params = useParams();
@@ -31,13 +31,10 @@ const BlockModal: FC<BlockModalProperties> = (props) => {
           return i.value?.trim();
         }
       })
-      .filter((i) => i);
+      .filter((i) => i) as string[];
 
     try {
-      await httpClient(true).post("/v1/TrainingBlocks", {
-        trainingProgramId: params.programId,
-        blocks: blocks,
-      });
+      await createTrainingBlocks(params.programId!, blocks);
 
       await props.onSuccess();
     } catch (e) {

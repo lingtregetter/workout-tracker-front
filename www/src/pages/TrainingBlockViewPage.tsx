@@ -1,6 +1,5 @@
 import { CSSProperties, FC, useContext, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
-import httpClient from "../services/http-client";
 import { TrainingBlock } from "../interfaces/domain-properties/training-block";
 import Loading from "../components/loading/Loading";
 import OverviewRow from "../components/overview-row/OverviewRow";
@@ -9,6 +8,10 @@ import Title from "../components/title/Title";
 import Button from "../components/button/Button";
 import CreateWorkoutContext from "../stores/create-workout-context";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
+import {
+  deleteTrainingBlockById,
+  getTrainingBlockById,
+} from "../services/training.service";
 
 const TrainingBlockViewPage: FC = () => {
   const navigate = useNavigate();
@@ -25,9 +28,7 @@ const TrainingBlockViewPage: FC = () => {
 
   const loadBlockWorkouts = async () => {
     try {
-      const response = await httpClient().get<TrainingBlock>(
-        `/v1/TrainingBlocks/${blockId}`
-      );
+      const response = await getTrainingBlockById(blockId!);
 
       setTrainingBlock(response.data);
     } catch (e) {
@@ -49,7 +50,7 @@ const TrainingBlockViewPage: FC = () => {
 
   const onYesClick = async () => {
     try {
-      await httpClient().delete(`/v1/TrainingBlocks/${blockId}`);
+      await deleteTrainingBlockById(blockId!);
 
       navigate(-1);
     } catch (e) {

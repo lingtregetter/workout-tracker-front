@@ -4,9 +4,9 @@ import Loading from "../../loading/Loading";
 import Button from "../../button/Button";
 import Modal from "../modal/Modal";
 import { WorkoutExerciseModalProperties } from "../../../interfaces/modal-properties/workout-exercise-modal-properties";
-import httpClient from "../../../services/http-client";
 import ExerciseModal from "../exerciseModal/ExerciseModal";
 import { createWorkoutExercise } from "../../../services/workout.service";
+import { getExerciseMuscles } from "../../../services/training.service";
 
 const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
   const [newWorkoutExerciseIds, setNewWorkoutExerciseIds] = useState<string[]>(
@@ -22,9 +22,7 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
 
   const loadMuscleExercises = async () => {
     try {
-      const response = await httpClient().get<MuscleExercise[]>(
-        `/v1/ExerciseMuscles`
-      );
+      const response = await getExerciseMuscles();
 
       setMuscleExercises(response.data);
     } catch (e) {

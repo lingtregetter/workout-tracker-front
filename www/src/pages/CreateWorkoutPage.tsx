@@ -9,7 +9,6 @@ import {
 } from "react";
 import MainView from "../components/main-view/MainView";
 import Button from "../components/button/Button";
-import httpClient from "../services/http-client";
 import { MuscleExercise } from "../interfaces/domain-properties/muscle-exercise";
 import Loading from "../components/loading/Loading";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,6 +16,7 @@ import CreateWorkoutContext from "../stores/create-workout-context";
 import ExerciseModal from "../components/modals/exerciseModal/ExerciseModal";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import { createWorkout } from "../services/workout.service";
+import { getExerciseMuscles } from "../services/training.service";
 
 const CreateWorkoutPage: FC = () => {
   const navigate = useNavigate();
@@ -57,9 +57,7 @@ const CreateWorkoutPage: FC = () => {
 
   const loadMuscleExercises = async () => {
     try {
-      const response = await httpClient().get<MuscleExercise[]>(
-        `/v1/ExerciseMuscles`
-      );
+      const response = await getExerciseMuscles();
 
       setMuscleExercises(response.data);
     } catch (e) {

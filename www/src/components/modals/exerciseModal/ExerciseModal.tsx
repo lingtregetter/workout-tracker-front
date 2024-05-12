@@ -3,9 +3,12 @@ import "./ExerciseModal.scss";
 import Modal from "../modal/Modal";
 import Button from "../../button/Button";
 import { MuscleGroup } from "../../../interfaces/domain-properties/muscle-group";
-import httpClient from "../../../services/http-client";
 import Loading from "../../loading/Loading";
 import { ExerciseModalProperties } from "../../../interfaces/modal-properties/exercise-modal-properties";
+import {
+  createExercise,
+  getMuscleGroups,
+} from "../../../services/training.service";
 
 const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
   const [muscles, setMuscles] = useState<MuscleGroup[]>([]);
@@ -32,9 +35,7 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
 
   const loadMuscleGroups = async () => {
     try {
-      const response = await httpClient().get<MuscleGroup[]>(
-        `/v1/MuscleGroups`
-      );
+      const response = await getMuscleGroups();
 
       setMuscles(response.data);
     } catch (e) {
@@ -48,11 +49,7 @@ const ExerciseModal: FC<ExerciseModalProperties> = (props) => {
     if (isFormInvalid) return;
 
     try {
-      await httpClient().post("/v1/Exercises", {
-        exerciseName: exerciseName,
-        exerciseDescription: exerciseDescription,
-        muscleGroupIds: muscleGroupIds,
-      });
+      await createExercise(exerciseName!, exerciseDescription!, muscleGroupIds);
 
       await props.onSuccess();
       props.onCancel();
