@@ -1,8 +1,8 @@
 import { FC } from "react";
 import MainView from "../components/main-view/MainView";
-import httpClient from "../services/http-client";
 import { useNavigate } from "react-router-dom";
 import CreateProgramForm from "../components/forms/create-program-form/CreateProgramForm";
+import { createTrainingProgram } from "../services/program.service";
 
 const CreateProgramPage: FC = () => {
   const navigate = useNavigate();
@@ -15,11 +15,7 @@ const CreateProgramPage: FC = () => {
     if (!programName || blocks.length === 0) return;
 
     try {
-      await httpClient(true).post("/v1/TrainingPrograms", {
-        programName: programName?.trim(),
-        programDescription: programDescription,
-        blocks: blocks,
-      });
+      await createTrainingProgram(programName, blocks, programDescription);
       navigate("/programs");
     } catch (e) {
       console.log("ERROR: ", e);

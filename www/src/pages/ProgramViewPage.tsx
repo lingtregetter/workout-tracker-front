@@ -1,6 +1,5 @@
 import { FC, useContext, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
-import httpClient from "../services/http-client";
 import { TrainingProgram } from "../interfaces/domain-properties/training-program";
 import Loading from "../components/loading/Loading";
 import OverviewRow from "../components/overview-row/OverviewRow";
@@ -9,6 +8,10 @@ import CreateWorkoutContext from "../stores/create-workout-context";
 import Button from "../components/button/Button";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
 import BlockModal from "../components/modals/blockModal/BlockModal";
+import {
+  deleteTrainingProgram,
+  getTrainingProgramById,
+} from "../services/program.service";
 
 const ProgramViewPage: FC = () => {
   const navigate = useNavigate();
@@ -26,9 +29,7 @@ const ProgramViewPage: FC = () => {
 
   const loadProgramBlocks = async () => {
     try {
-      const response = await httpClient().get<TrainingProgram>(
-        `/v1/TrainingPrograms/${programId}`
-      );
+      const response = await getTrainingProgramById(programId);
 
       setTrainingProgram(response.data);
     } catch (e) {
@@ -50,8 +51,7 @@ const ProgramViewPage: FC = () => {
 
   const onYesClick = async () => {
     try {
-      await httpClient().delete(`/v1/TrainingPrograms/${programId}`);
-
+      await deleteTrainingProgram(programId);
       navigate("/programs");
     } catch (e) {
       console.log(e);
