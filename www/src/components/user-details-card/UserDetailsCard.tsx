@@ -2,9 +2,12 @@ import { FC, FormEvent, useEffect, useState } from "react";
 import "./UserDetailsCard.scss";
 import Button from "../button/Button";
 import { UserDetailsCardProperties } from "../../interfaces/user-details-card-properties";
-import httpClient from "../../services/http-client";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../stores/auth-context";
+import {
+  createPersonalInfo,
+  updatePersonalInfo,
+} from "../../services/user.service";
 
 const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
   const personalInformation = props.personalInformation;
@@ -26,17 +29,13 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
 
   const updateDetailsOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedDetails = {
-      id: personalInformation!.id,
-      gender: gender,
-      height: height,
-      weight: weight,
-    };
 
     try {
-      await httpClient().put(
-        `/v1/PersonalInformations/${personalInformation!.id}`,
-        updatedDetails
+      await updatePersonalInfo(
+        personalInformation!.id,
+        gender!,
+        height!,
+        weight!
       );
       await props.onSuccess();
       setIsReadOnly((isReadOnly) => !isReadOnly);
@@ -56,7 +55,7 @@ const UserDetailsCard: FC<UserDetailsCardProperties> = (props) => {
     };
 
     try {
-      await httpClient().post("/v1/PersonalInformations", details);
+      await createPersonalInfo(auth.userId!, gender!, height!, weight!);
       await props.onSuccess();
       setIsReadOnly((isReadOnly) => !isReadOnly);
     } catch (e) {

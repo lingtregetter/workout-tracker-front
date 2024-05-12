@@ -4,8 +4,8 @@ import Button from "../components/button/Button";
 import Title from "../components/title/Title";
 import { UserProgram } from "../interfaces/domain-properties/user-program";
 import OverviewRow from "../components/overview-row/OverviewRow";
-import httpClient from "../services/http-client";
 import { useNavigate } from "react-router-dom";
+import { getUserPrograms } from "../services/user.service";
 
 const MyProgramsPage: FC = () => {
   const navigate = useNavigate();
@@ -17,9 +17,7 @@ const MyProgramsPage: FC = () => {
 
   const loadPrograms = async () => {
     try {
-      const response = await httpClient().get<UserProgram[]>(
-        "/v1/UserPrograms"
-      );
+      const response = await getUserPrograms();
 
       setProgramsList(response.data);
     } catch (e) {
