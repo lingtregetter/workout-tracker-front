@@ -2,6 +2,7 @@ import { FC, FormEvent, useState } from "react";
 import MainView from "../components/main-view/MainView";
 import LoginForm from "../components/forms/login-form/LoginForm";
 import { useAuth } from "../stores/auth-context";
+import { logIn } from "../services/auth.service";
 
 const SignInPage: FC = () => {
   const auth = useAuth();
@@ -14,7 +15,7 @@ const SignInPage: FC = () => {
   ) => {
     event.preventDefault();
     try {
-      await auth.logIn(email, password);
+      await logIn(auth, email, password);
     } catch (e) {
       console.log("ERROR: ", e);
       setError(true);

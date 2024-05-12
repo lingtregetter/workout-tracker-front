@@ -2,6 +2,7 @@ import { FC, FormEvent, useState } from "react";
 import RegisterForm from "../components/forms/register-form/RegisterForm";
 import MainView from "../components/main-view/MainView";
 import { useAuth } from "../stores/auth-context";
+import { register } from "../services/auth.service";
 
 const SignUpPage: FC = () => {
   const auth = useAuth();
@@ -18,7 +19,7 @@ const SignUpPage: FC = () => {
     event.preventDefault();
     try {
       setUserEmail(email);
-      await auth.register(firstName, lastName, email, password);
+      await register(auth, firstName, lastName, email, password);
     } catch (e) {
       console.log("ERROR: ", e);
       setError(true);
