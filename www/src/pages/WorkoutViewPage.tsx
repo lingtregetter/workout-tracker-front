@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import MainView from "../components/main-view/MainView";
-import httpClient from "../services/http-client";
 import { useNavigate, useParams } from "react-router-dom";
 import { Workout } from "../interfaces/domain-properties/workout";
 import Loading from "../components/loading/Loading";
@@ -11,6 +10,13 @@ import ConfirmationModal from "../components/modals/confirmationModal/Confirmati
 import WorkoutExerciseModal from "../components/modals/workoutExerciseModal/WorkoutExerciseModal";
 import DeleteButton from "../components/svg-buttons/DeleteButton";
 import Title from "../components/title/Title";
+import {
+  deleteWorkoutById,
+  deleteWorkoutExercisesById,
+  deleteWorkoutSetById,
+  getWorkoutExercises,
+  getWorkoutSetById,
+} from "../services/workout.service";
 
 const WorkoutViewPage: FC = () => {
   const navigate = useNavigate();
@@ -46,9 +52,7 @@ const WorkoutViewPage: FC = () => {
 
   const loadWorkoutExercises = async () => {
     try {
-      const response = await httpClient().get<Workout>(
-        `/v1/WorkoutExercises/${workoutId}`
-      );
+      const response = await getWorkoutExercises(workoutId);
 
       for (const exercise of response.data.exercises) {
         const sets = await loadWorkoutSets(exercise.workoutExerciseId);
@@ -64,10 +68,7 @@ const WorkoutViewPage: FC = () => {
 
   const loadWorkoutSets = async (workoutExerciseId: string) => {
     try {
-      const response = await httpClient().get<any>(
-        `/v1/WorkoutSets/${workoutExerciseId}`
-      );
-
+      const response = await getWorkoutSetById(workoutExerciseId);
       return response.data;
     } catch (e) {
       console.log(e);
@@ -76,8 +77,7 @@ const WorkoutViewPage: FC = () => {
 
   const onYesClick = async () => {
     try {
-      await httpClient().delete(`/v1/Workouts/${workoutId}`);
-
+      await deleteWorkoutById(workoutId);
       navigate(-1);
     } catch (e) {
       console.log(e);
@@ -91,8 +91,7 @@ const WorkoutViewPage: FC = () => {
 
   const onSetDelete = async () => {
     try {
-      await httpClient().delete(`/v1/WorkoutSets/${selectedSet?.id}`);
-
+      await deleteWorkoutSetById(selectedSet!.id);
       loadWorkoutExercises();
       setIsEditSetModalVisible(false);
     } catch (e) {
@@ -102,11 +101,8 @@ const WorkoutViewPage: FC = () => {
 
   const onWorkoutExerciseDelete = async () => {
     try {
-      await httpClient().delete(
-        `/v1/WorkoutExercises/${workoutExerciseToBeDeleted}`
-      );
-
-      loadWorkoutExercises();
+      await deleteWorkoutExercisesById(workoutExerciseToBeDeleted! as string);
+      await loadWorkoutExercises();
       setIsWorkoutExerciseConfirmationModalVisible(false);
     } catch (e) {
       console.log(e);

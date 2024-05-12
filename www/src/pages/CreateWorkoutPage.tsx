@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CreateWorkoutContext from "../stores/create-workout-context";
 import ExerciseModal from "../components/modals/exerciseModal/ExerciseModal";
 import ConfirmationModal from "../components/modals/confirmationModal/ConfirmationModal";
+import { createWorkout } from "../services/workout.service";
 
 const CreateWorkoutPage: FC = () => {
   const navigate = useNavigate();
@@ -82,12 +83,12 @@ const CreateWorkoutPage: FC = () => {
   };
 
   const saveWorkout = async () => {
-    await httpClient().post("/v1/Workouts", {
-      workoutName: workoutName,
-      avPerformanceTime: avPerformanceTime,
-      trainingBlockId: context.trainingBlockId,
-      exerciseIds: [...new Set(newWorkoutExerciseIds)],
-    });
+    await createWorkout(
+      workoutName!,
+      avPerformanceTime!,
+      context.trainingBlockId!,
+      newWorkoutExerciseIds
+    );
   };
 
   const handleConfirmationYes = async () => {

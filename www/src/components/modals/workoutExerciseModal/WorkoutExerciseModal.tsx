@@ -6,6 +6,7 @@ import Modal from "../modal/Modal";
 import { WorkoutExerciseModalProperties } from "../../../interfaces/modal-properties/workout-exercise-modal-properties";
 import httpClient from "../../../services/http-client";
 import ExerciseModal from "../exerciseModal/ExerciseModal";
+import { createWorkoutExercise } from "../../../services/workout.service";
 
 const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
   const [newWorkoutExerciseIds, setNewWorkoutExerciseIds] = useState<string[]>(
@@ -50,10 +51,7 @@ const WorkoutExerciseModal: FC<WorkoutExerciseModalProperties> = (props) => {
     event.preventDefault();
 
     try {
-      await httpClient().post("/v1/WorkoutExercises", {
-        workoutId: props.workoutId,
-        exerciseIds: newWorkoutExerciseIds,
-      });
+      await createWorkoutExercise(props.workoutId, newWorkoutExerciseIds);
 
       await props.onSuccess();
       props.onCancel();

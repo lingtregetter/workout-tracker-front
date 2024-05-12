@@ -3,7 +3,10 @@ import "./SetModal.scss";
 import Modal from "../modal/Modal";
 import { SetModalProperties } from "../../../interfaces/modal-properties/set-modal-properties";
 import Button from "../../button/Button";
-import httpClient from "../../../services/http-client";
+import {
+  createWorkoutSet,
+  updateWorkoutSetById,
+} from "../../../services/workout.service";
 
 const SetModal: FC<SetModalProperties> = (props) => {
   const [repCount, setRepCount] = useState<number>();
@@ -19,19 +22,12 @@ const SetModal: FC<SetModalProperties> = (props) => {
 
     try {
       if (props.title === "Add a new set") {
-        await httpClient().post("/v1/WorkoutSets", {
-          workoutExerciseId: props.exerciseId,
-          usedWeight: weight,
-          repNumber: repCount,
-        });
+        await createWorkoutSet(props.exerciseId, weight!, repCount!);
       } else {
-        await httpClient().put(
-          `/v1/WorkoutSets/${props.existingWorkoutSet?.id}`,
-          {
-            id: props.existingWorkoutSet?.id,
-            usedWeight: weight,
-            repNumber: repCount,
-          }
+        await updateWorkoutSetById(
+          props.existingWorkoutSet!.id,
+          weight!,
+          repCount!
         );
       }
 
